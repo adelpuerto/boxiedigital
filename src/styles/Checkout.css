@@ -1,0 +1,249 @@
+/* src/styles/Checkout.css */
+
+.checkout-page {
+    background-color: #f8f9fa;
+    padding: 40px 20px;
+    min-height: 80vh;
+    padding-top: 140px;
+}
+
+.checkout-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr; /* Columna izquierda más ancha */
+    gap: 40px;
+    align-items: start;
+}
+
+/* Columna Izquierda */
+.checkout-form-section h2 {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 2.5rem;
+    color: #2A2433;
+    margin-bottom: 30px;
+}
+
+/* Sección Cómo Funciona */
+.how-it-works {
+    background: #fff;
+    padding: 25px;
+    border-radius: 16px;
+    margin-bottom: 30px;
+    border: 1px solid #eee;
+}
+
+.how-it-works h3 {
+    font-family: 'Josefin Sans', sans-serif;
+    color: #F44E63;
+    margin-bottom: 15px;
+}
+
+.step-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.step-num {
+    background: #2A2433;
+    color: white;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* Formulario */
+.security-form {
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+}
+
+.security-form h3 {
+    margin-bottom: 5px;
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+.form-note {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.input-group input:focus {
+    border-color: #F44E63;
+    outline: none;
+}
+
+.btn-continue {
+    width: 100%;
+    background-color: #2A2433;
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.btn-continue:hover {
+    background-color: #443b52;
+}
+
+/* Pago */
+.payment-area {
+    margin-top: 20px;
+    background: #eefbff;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #bcefff;
+}
+
+.mp-box {
+    margin-top: 15px;
+}
+
+.btn-link {
+    background: none;
+    border: none;
+    color: #666;
+    text-decoration: underline;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 0.9rem;
+}
+
+/* Columna Derecha (Resumen) */
+.summary-card {
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    border: 2px solid #F44E63;
+}
+
+.summary-item {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.summary-item img {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.summary-total {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.total-price {
+    color: #F44E63;
+}
+
+.security-badge {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #666;
+    background: #f9f9f9;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+/* --- SECCIÓN DE CUPONES (AHORA ESTÁ FUERA DEL MEDIA QUERY) --- */
+.coupon-section {
+    margin: 20px 0;
+}
+
+.coupon-input-row {
+    display: flex;
+    gap: 10px;
+}
+
+.coupon-input-row input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 0.9rem;
+}
+
+.coupon-input-row button {
+    padding: 0 15px;
+    background: #2A2433;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.coupon-input-row button.btn-remove {
+    background: #F44E63;
+}
+
+.coupon-msg {
+    font-size: 0.85rem;
+    margin-top: 5px;
+}
+
+.coupon-msg.success { color: green; }
+.coupon-msg.error { color: red; }
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    color: #666;
+}
+
+.summary-row.discount {
+    color: #F44E63;
+    font-weight: bold;
+}
+
+/* --- Responsive (Siempre al final) --- */
+@media (max-width: 768px) {
+    .checkout-container {
+        grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column-reverse; /* Formulario abajo, Resumen arriba */
+    }
+}

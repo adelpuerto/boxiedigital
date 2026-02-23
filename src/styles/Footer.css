@@ -1,0 +1,212 @@
+/* --- FOOTER GENERAL --- */
+.boxie-footer {
+    background-color: #232127;
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    padding-top: 60px;
+    margin-top: auto;
+    border-top: 3px solid #F44E63;
+    
+    /* SOLUCIÓN AL SCROLL HORIZONTAL: */
+    width: 100%;
+    position: relative;
+    overflow: hidden; /* Esto corta cualquier cosa que intente salirse */
+    box-sizing: border-box;
+}
+
+/* Aseguramos que el padding no rompa las cajas */
+.boxie-footer *, 
+.boxie-footer *::before, 
+.boxie-footer *::after {
+    box-sizing: border-box;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px 50px;
+    
+    /* Grid System */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 40px;
+}
+
+/* --- COLUMNAS --- */
+.footer-col h3 {
+    font-size: 1.1rem;
+    color: #fff;
+    margin-bottom: 25px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    display: inline-block;
+}
+
+.footer-col h3::after {
+    content: '';
+    position: absolute;
+    width: 30px;
+    height: 2px;
+    background: #F44E63;
+    bottom: -8px;
+    left: 0;
+}
+
+/* Marca */
+.brand-col .footer-logo {
+    max-width: 120px;
+    margin-bottom: 20px;
+    filter: brightness(0) invert(1);
+}
+
+.footer-tagline {
+    color: #aaa;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    /* Evitamos que textos largos empujen el ancho */
+    max-width: 100%; 
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #ccc;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+
+.contact-icon {
+    color: #F44E63;
+    flex-shrink: 0;
+}
+
+/* --- LINKS --- */
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li {
+    margin-bottom: 12px;
+}
+
+.footer-links a {
+    color: #bbb;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.footer-links a:hover {
+    color: #F44E63;
+    padding-left: 5px;
+}
+
+/* --- REDES --- */
+.social-icons {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.social-icons a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 50%;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+.social-icons a:hover {
+    background: #F44E63;
+    transform: translateY(-3px);
+}
+
+/* QR AFIP */
+.afip-qr-container {
+    margin-top: 10px;
+}
+.qr-label {
+    font-size: 0.8rem;
+    color: #777;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+.afip-img {
+    width: 60px;
+    height: auto;
+    background: #fff;
+    padding: 2px;
+    border-radius: 4px;
+}
+
+/* --- BOTTOM BAR --- */
+.footer-bottom {
+    background-color: #1a191d;
+    padding: 20px; /* Padding interno */
+    text-align: center;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    
+    /* FLEXBOX */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    
+    /* IMPORTANTE: Usar margins para centrar y limitar ancho */
+    margin: 0; 
+    width: 100%;
+}
+
+.footer-bottom p {
+    color: #666;
+    font-size: 0.85rem;
+    margin: 5px 0;
+}
+
+.made-with {
+    color: #888;
+}
+
+/* --- RESPONSIVE MOBILE --- */
+@media (max-width: 768px) {
+    .footer-container {
+        /* En mobile, 1 columna y centrado */
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 40px;
+        padding-left: 15px;  /* Reducimos un poco el padding lateral */
+        padding-right: 15px;
+    }
+
+    .footer-col h3::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .brand-col .footer-logo,
+    .social-icons,
+    .contact-item {
+        margin-left: auto;
+        margin-right: auto;
+        justify-content: center;
+    }
+
+    /* Ajuste de la barra inferior en mobile */
+    .footer-bottom {
+        flex-direction: column;
+        gap: 10px;
+        padding: 20px 10px;
+    }
+}

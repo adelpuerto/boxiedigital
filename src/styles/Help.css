@@ -1,0 +1,217 @@
+/* --- CONFIGURACIÓN GENERAL --- */
+.help-page {
+    font-family: 'Poppins', sans-serif;
+    background-color: #fff;
+    min-height: 100vh;
+    padding-bottom: 60px;
+}
+
+.help-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* --- HERO SECTION --- */
+.help-hero {
+    text-align: center;
+    padding: 80px 20px 50px;
+    background: radial-gradient(circle at center, rgba(244, 78, 99, 0.05) 0%, rgba(255,255,255,0) 70%);
+    opacity: 0;
+}
+
+.help-hero h1 {
+    font-size: 2.8rem;
+    color: #000;
+    margin-bottom: 15px;
+}
+
+.help-hero p {
+    font-size: 1.2rem;
+    color: #666;
+}
+
+/* --- FAQ SECTION (ACORDEÓN) --- */
+.faq-section {
+    margin-bottom: 80px;
+    opacity: 0;
+}
+
+.faq-section h2, .legal-section h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 30px;
+    color: #000;
+}
+
+.accordion {
+    border-top: 1px solid #eee;
+}
+
+.accordion-item {
+    border-bottom: 1px solid #eee;
+    overflow: hidden;
+}
+
+.accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 10px;
+    cursor: pointer;
+    background: #fff;
+    transition: background 0.3s;
+}
+
+.accordion-header:hover {
+    background: #fafafa;
+}
+
+.accordion-header h3 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 0;
+    color: #333;
+}
+
+.accordion-icon {
+    font-size: 1.5rem;
+    color: #F44E63;
+    font-weight: bold;
+    margin-left: 15px;
+}
+
+/* Animación del cuerpo del acordeón */
+.accordion-body {
+    max-height: 0;
+    opacity: 0;
+    transition: all 0.4s ease-out;
+    padding: 0 10px;
+    color: #666;
+    line-height: 1.6;
+}
+
+.accordion-item.active .accordion-header h3 {
+    color: #F44E63; /* Título rosa al abrir */
+}
+
+.accordion-item.active .accordion-body {
+    max-height: 200px; /* Altura máxima aproximada */
+    opacity: 1;
+    padding-bottom: 20px;
+}
+
+/* --- LEGAL SECTION --- */
+.legal-section {
+    margin-bottom: 80px;
+    text-align: center;
+}
+
+.legal-subtitle {
+    color: #666;
+    margin-bottom: 40px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.legal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.legal-card {
+    background: #fff;
+    border: 1px solid #eee;
+    padding: 30px 20px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.legal-card:hover {
+    border-color: #F44E63;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(244, 78, 99, 0.1);
+}
+
+.legal-icon {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+
+.legal-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+}
+
+.legal-card p {
+    font-size: 0.9rem;
+    color: #777;
+    line-height: 1.4;
+}
+
+/* Link obligatorio Defensa Consumidor */
+.consumer-defense a {
+    display: inline-block;
+    color: #888;
+    text-decoration: underline;
+    font-size: 0.9rem;
+    margin-top: 20px;
+}
+
+.consumer-defense a:hover {
+    color: #000;
+}
+
+/* --- HELP CONTACT CTA --- */
+.help-contact {
+    display: flex;
+    justify-content: center;
+}
+
+.contact-box {
+    background: #fdfdfd;
+    border: 1px solid #eee;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    width: 100%;
+    max-width: 600px;
+}
+
+.contact-box h2 {
+    margin-bottom: 10px;
+}
+
+.btn-primary-outline {
+    margin-top: 20px;
+    background: transparent;
+    border: 2px solid #F44E63;
+    color: #F44E63;
+    padding: 10px 30px;
+    border-radius: 30px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-primary-outline:hover {
+    background: #F44E63;
+    color: white;
+}
+
+/* --- ANIMACIONES --- */
+.fade-in-up { animation: fadeInUp 0.8s ease forwards; }
+.fade-in { animation: fadeIn 0.8s ease forwards; }
+
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .legal-grid { grid-template-columns: 1fr; }
+    .help-hero h1 { font-size: 2.2rem; }
+}

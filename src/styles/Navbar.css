@@ -1,0 +1,145 @@
+/* src/styles/Navbar.css */
+
+/* --- CONFIGURACIÓN GENERAL --- */
+.navbar {
+    width: 100%;
+    height: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+    z-index: 1000;
+    
+    /* 1. POR DEFECTO: Transparente y flotante (Aesthetic) */
+    background: transparent; 
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-shadow: none;
+    
+    /* Transición suave para que el cambio de color no sea brusco */
+    transition: background-color 0.3s ease; 
+}
+
+/* 2. ESTADO ABIERTO (Cuando tocás la hamburguesa) */
+/* Esto hace que la barra se ponga blanca para unirse con el menú */
+.navbar.nav-open {
+    background: #ffffff;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05); /* Opcional: sombrita suave */
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    max-width: 1200px;
+    height: 100%;
+}
+
+/* --- LOGO --- */
+.navbar-logo {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    cursor: pointer;
+}
+
+.navbar-logo img {
+    height: 45px; 
+    width: auto;
+    object-fit: contain; 
+    transition: transform 0.2s;
+}
+
+.navbar-logo img:hover { transform: scale(1.05); }
+
+/* --- MENÚ DESKTOP --- */
+.nav-menu {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 40px;
+}
+
+.nav-links {
+    color: #2A2433;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 8px 16px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+.nav-links:hover {
+    color: #F44E63;
+    background: rgba(244, 78, 99, 0.05);
+}
+
+.help-btn { border: 1px solid rgba(0,0,0,0.1); }
+.help-btn:hover { border-color: #F44E63; }
+
+/* --- HAMBURGUESA (Móvil) --- */
+.menu-icon {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 5px;
+}
+.menu-icon .bar {
+    width: 25px;
+    height: 3px;
+    background-color: #2A2433;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+/* --- MOBILE RESPONSIVE --- */
+@media screen and (max-width: 960px) {
+    /* NOTA: Acá NO ponemos background blanco fijo. 
+       Dejamos que herede el "transparent" por defecto, 
+       y que cambie a blanco solo con la clase .nav-open de arriba. */
+    
+    .menu-icon {
+        display: flex;
+    }
+
+    .nav-menu {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 100vh;
+        position: absolute;
+        top: 90px; /* Debajo de la barra */
+        left: -100%;
+        opacity: 0;
+        transition: all 0.4s ease;
+        background: #ffffff; /* El menú desplegable SÍ es blanco */
+        padding-top: 30px;
+        border-top: 1px solid #f0f0f0; /* Línea divisoria finita */
+    }
+
+    .nav-menu.active {
+        left: 0;
+        opacity: 1;
+    }
+
+    .nav-item { width: 100%; }
+
+    .nav-links {
+        text-align: center;
+        width: 100%;
+        display: block;
+        padding: 1.5rem 0;
+        font-size: 1.2rem;
+        border-bottom: 1px solid #f9f9f9;
+    }
+
+    /* Animación X */
+    .menu-icon.open .bar:nth-child(1) { transform: rotate(45deg) translate(5px, 6px); }
+    .menu-icon.open .bar:nth-child(2) { opacity: 0; }
+    .menu-icon.open .bar:nth-child(3) { transform: rotate(-45deg) translate(5px, -6px); }
+}

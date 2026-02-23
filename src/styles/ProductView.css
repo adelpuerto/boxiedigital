@@ -1,0 +1,405 @@
+/* src/styles/ProductView.css */
+
+/* --- GENERAL LAYOUT --- */
+/* src/styles/ProductView.css */
+
+.product-view-container {
+    width: 100%;
+    /* CAMBIO CLAVE: 'auto' para que no ocupe pantalla extra al pepe */
+    min-height: auto; 
+    background-color: #f8f9fa; 
+    
+    margin-top: 0;
+    padding-top: 30px; 
+    padding-bottom: 0px; /* Sacamos el espacio de abajo para que las recos suban */
+    padding-left: 20px;
+    padding-right: 20px;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; 
+}
+
+/* --- BARRA DE TEXTO (MARQUEE) --- */
+/* Esta es la barra que se mueve */
+.top-marquee {
+    /* IMPORTANTE: Este margen empuja la barra debajo del Navbar fijo */
+    margin-top: 75px; 
+    
+    background-color: #2A2433;
+    color: #F44E63;
+    padding: 8px 0;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    width: 100%;
+    display: block; /* Aseguramos que se muestre */
+}
+
+.marquee-content { 
+    display: inline-block; 
+    animation: scroll 40s linear infinite; 
+}
+
+@keyframes scroll { 
+    0% { transform: translateX(0); } 
+    100% { transform: translateX(-50%); } 
+}
+
+/* --- TARJETA PRINCIPAL --- */
+.product-main-card {
+    background: #ffffff;
+    width: 100%;
+    max-width: 900px;
+    height: auto; 
+    min-height: 500px;
+    border-radius: 24px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+    display: flex; 
+    flex-direction: row; 
+    overflow: hidden; 
+}
+
+/* --- LADO IZQUIERDO: GALERÍA --- */
+.product-gallery {
+    width: 50%;
+    min-height: 100%; 
+    background-color: #f0f0f0;
+    position: relative;
+}
+
+.gallery-wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.main-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    display: block;
+    position: absolute; 
+}
+
+/* Flechas */
+.arrow-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.4);
+    border: none;
+    color: #2A2433;
+    font-size: 18px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.2s;
+}
+.arrow-btn:hover { background: white; color: #F44E63; }
+.left { left: 15px; }
+.right { right: 15px; }
+
+/* Dots */
+.dots-overlay {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+.dot {
+    width: 8px;
+    height: 8px;
+    background: rgba(255,255,255,0.6);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.dot.active { background: #fff; transform: scale(1.3); }
+
+/* --- LADO DERECHO: INFO --- */
+.product-info {
+    width: 50%;
+    padding: 30px 40px; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+}
+
+.info-header { margin-bottom: 5px; }
+
+.p-title {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 28px; 
+    font-weight: 700;
+    color: #2A2433;
+    line-height: 1.1;
+    margin: 0 0 5px 0;
+}
+.p-title span { color: #F44E63; }
+
+.p-subtitle {
+    font-size: 13px;
+    color: #888;
+    margin: 0;
+}
+
+.p-price {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #2A2433;
+    margin-top: 5px;
+    margin-bottom: 10px; 
+}
+
+/* Lista de características */
+.p-features {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 20px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px; 
+}
+
+.p-features li {
+    font-size: 13px;
+    color: #555;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    line-height: 1.4;
+}
+
+/* ESTILO PUNTO MINIMALISTA ROSA */
+.check-icon {
+    width: 8px;
+    height: 8px;
+    background-color: #F44E63;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+    margin-top: 5px;
+}
+
+/* Botón de Compra */
+.action-area { width: 100%; }
+
+.btn-buy {
+    background: #F44E63;
+    color: white;
+    width: 100%;
+    padding: 12px; 
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(244, 78, 99, 0.2);
+}
+.btn-buy:hover { transform: translateY(-2px); background: #d63a4e; }
+
+/* Sección Beneficios */
+.why-boxie {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px dashed #eee;
+}
+.why-boxie h4 {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: #2A2433;
+    margin: 0 0 10px 0;
+    text-align: center;
+}
+
+.benefits-grid {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.benefit-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
+    background: #fdfdfd;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #f0f0f0;
+}
+.b-icon { font-size: 16px; }
+.benefit-item p { 
+    font-size: 10px; 
+    color: #666; 
+    font-weight: 600; 
+    text-align: center; 
+    line-height: 1.1;
+    margin: 0;
+}
+
+/* Ocultamos cosas innecesarias (pero NO la marquee) */
+.mini-description, .divider { display: none; }
+
+/* --- RECOMENDACIONES --- */
+.recommendations-section {
+    /* CAMBIO: Achicamos el padding para acercarlo a la tarjeta principal */
+    padding: 30px 0 60px 0; 
+    text-align: center;
+    width: 100%;
+    background-color: #f8f9fa; /* Aseguramos que el fondo siga siendo el mismo */
+}
+.rec-title {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #2A2433;
+}
+.rec-cards-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+.rec-card {
+    width: 150px;
+    height: 200px;
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+.rec-card img { width: 100%; height: 100%; object-fit: cover; }
+.rec-card-overlay {
+    position: absolute; bottom: 0; left: 0; width: 100%;
+    background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+    padding: 10px;
+}
+.rec-card-overlay h3 { color: white; font-family: 'Josefin Sans', sans-serif; font-size: 14px; margin: 0; }
+
+/* --- MOBILE RESPONSIVE --- */
+@media screen and (max-width: 960px) {
+    .product-view-container {
+        padding: 10px;
+        align-items: flex-start;
+    }
+    .product-main-card {
+        flex-direction: column;
+    }
+    .product-gallery, .product-info { width: 100%; }
+    .product-gallery { height: 350px; position: relative; }
+    .main-img { position: relative; }
+    .product-info { padding: 25px; gap: 15px; }
+    
+    /* En mobile la barra necesita su propio ajuste si el navbar cambia de tamaño */
+    .top-marquee { margin-top: 70px; } 
+}
+/* --- ESTILOS DE LA OFERTA ESPECIAL --- */
+
+/* Contenedor del aviso */
+.special-offer-box {
+    background: #FFFbea; /* Fondo amarillito suave */
+    border: 1px solid #ffd54f; /* Borde dorado */
+    color: #5d4037;
+    padding: 12px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.offer-emoji {
+    font-size: 24px;
+}
+
+.offer-texts {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.offer-texts strong {
+    font-size: 13px;
+    color: #d32f2f; /* Rojo urgencia */
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.offer-texts p {
+    font-size: 12px;
+    margin: 2px 0 0 0;
+    line-height: 1.2;
+}
+
+.offer-texts p span {
+    font-weight: 800;
+    background-color: #d32f2f;
+    color: white;
+    padding: 1px 4px;
+    border-radius: 4px;
+}
+
+/* Animación de aparición (Pop In) */
+.pop-in {
+    animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes popIn {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* Animación de latido para el botón cuando hay oferta */
+.btn-pulse {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(244, 78, 99, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(244, 78, 99, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(244, 78, 99, 0); }
+}
+
+/* Precios tachados */
+.price-offer-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.old-price {
+    font-size: 18px;
+    text-decoration: line-through;
+    color: #999;
+}
+
+.new-price {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: #F44E63;
+}

@@ -1,0 +1,255 @@
+/* --- CONFIGURACIÓN GENERAL --- */
+.gallery-page {
+    font-family: 'Poppins', sans-serif;
+    background-color: #fff;
+    min-height: 100vh;
+    padding-bottom: 80px;
+}
+
+/* --- HERO --- */
+.gallery-hero {
+    text-align: center;
+    padding: 80px 20px 40px;
+    opacity: 0;
+}
+
+.gallery-hero h1 {
+    font-size: 3.5rem;
+    color: #000;
+    margin-bottom: 10px;
+    letter-spacing: -1px;
+}
+
+.gallery-hero p {
+    font-size: 1.2rem;
+    color: #666;
+}
+
+/* --- FILTROS --- */
+.gallery-filters {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 50px;
+    flex-wrap: wrap;
+    padding: 0 20px;
+    opacity: 0;
+}
+
+.filter-btn {
+    background: #f5f5f5;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 30px;
+    font-size: 0.95rem;
+    color: #555;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.filter-btn:hover {
+    background: #e0e0e0;
+    transform: translateY(-2px);
+}
+
+.filter-btn.active {
+    background: #F44E63;
+    color: white;
+    box-shadow: 0 5px 15px rgba(244, 78, 99, 0.3);
+}
+
+/* --- GRID SYSTEM --- */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px 80px; /* Padding bottom para separar de la siguiente sección */
+}
+
+/* --- TARJETA (CARD) --- */
+.gallery-card {
+    background: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    animation: fadeIn 0.6s ease forwards;
+    border: 1px solid #f0f0f0; /* Borde muy sutil */
+}
+
+.gallery-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+}
+
+/* IMAGEN Y OVERLAY */
+.card-image {
+    position: relative;
+    width: 100%;
+    height: 280px; /* Altura controlada */
+    overflow: hidden;
+}
+
+.card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.gallery-card:hover .card-image img {
+    transform: scale(1.1);
+}
+
+.card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.gallery-card:hover .card-overlay {
+    opacity: 1;
+}
+
+.btn-use-template {
+    background: #fff;
+    color: #000;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.gallery-card:hover .btn-use-template {
+    transform: translateY(0);
+}
+
+.btn-use-template:hover {
+    background: #F44E63;
+    color: #fff;
+}
+
+/* INFO */
+.card-info {
+    padding: 20px;
+}
+
+.card-cat {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #F44E63;
+    font-weight: 800;
+    letter-spacing: 1px;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.card-info h3 {
+    font-size: 1.4rem;
+    margin-bottom: 8px;
+    color: #111;
+}
+
+.card-info p {
+    font-size: 0.95rem;
+    color: #666;
+    line-height: 1.5;
+}
+
+/* --- NUEVA SECCIÓN: ¿QUÉ BOXIE ELEGIR? --- */
+.choose-guide-section {
+    background-color: #fafafa;
+    padding: 80px 20px;
+    text-align: center;
+    margin-top: 40px;
+    border-radius: 40px 40px 0 0; /* Curva moderna arriba */
+}
+
+.section-title {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    color: #000;
+}
+
+.section-subtitle {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 50px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.guide-cards-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.guide-card {
+    background: #fff;
+    padding: 40px 30px;
+    border-radius: 25px;
+    width: 300px; /* Ancho fijo para uniformidad */
+    text-align: left;
+    transition: all 0.3s ease;
+    border: 1px solid #eee;
+    cursor: pointer;
+}
+
+.guide-card:hover {
+    transform: translateY(-10px);
+    border-color: #F44E63;
+    box-shadow: 0 20px 40px rgba(244, 78, 99, 0.1);
+}
+
+.guide-icon {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.guide-card h3 {
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    color: #000;
+}
+
+.guide-card p {
+    font-size: 0.95rem;
+    color: #666;
+    line-height: 1.6;
+}
+
+/* --- ANIMACIONES --- */
+.fade-in-up { animation: fadeInUp 0.8s ease forwards; }
+.fade-in { animation: fadeIn 0.8s ease forwards; }
+
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .gallery-hero h1 { font-size: 2.5rem; }
+    .gallery-grid { grid-template-columns: 1fr; }
+    .card-image { height: 250px; }
+    .guide-cards-container { flex-direction: column; align-items: center; }
+    .guide-card { width: 100%; max-width: 340px; }
+}

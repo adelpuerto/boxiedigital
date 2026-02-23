@@ -1,0 +1,279 @@
+/* --- LAYOUT GENERAL (Solución Navbar) --- */
+.success-page {
+    background-color: #f8f9fa;
+    min-height: 100vh; /* Cubre toda la pantalla */
+    display: flex;
+    justify-content: center;
+    /* Alineamos arriba para controlar la bajada con padding */
+    align-items: flex-start; 
+    padding: 20px;
+    
+    /* ESTO EVITA QUE EL NAVBAR TAPE LA TARJETA */
+    padding-top: 140px; 
+    box-sizing: border-box;
+}
+
+/* --- TARJETA BASE --- */
+.success-card {
+    background: white;
+    max-width: 600px;
+    width: 100%;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    
+    /* Borde verde por defecto (Éxito) */
+    border-top: 5px solid #2ecc71; 
+    
+    /* Animación de entrada */
+    animation: slideIn 0.5s ease-out forwards;
+    position: relative;
+}
+
+/* Modificador para Modo Error (Borde Rojo) */
+.success-card.error-card {
+    border-top: 5px solid #ff6b6b;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- LOGO --- */
+.logo-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.success-logo {
+    max-width: 120px;
+    height: auto;
+}
+
+/* --- TIPOGRAFÍA --- */
+.success-card h1 {
+    font-family: 'Josefin Sans', sans-serif;
+    color: #2A2433;
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+    line-height: 1.2;
+}
+
+.subtitle {
+    color: #666;
+    margin-bottom: 30px;
+    font-size: 1rem;
+}
+
+/* --- ÍCONOS ANIMADOS --- */
+/* Check Verde */
+.check-icon {
+    font-size: 4rem;
+    margin-bottom: 20px;
+}
+
+/* Corazón Roto (Error) */
+.error-icon {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    display: inline-block;
+    animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px) rotate(-5deg); }
+    50% { transform: translateX(5px) rotate(5deg); }
+    75% { transform: translateX(-5px) rotate(-5deg); }
+    100% { transform: translateX(0); }
+}
+
+/* --- CAJA DE CREDENCIALES (ÉXITO) --- */
+.credentials-box {
+    background-color: #f0fdf4; /* Verde muy clarito */
+    border: 2px dashed #2ecc71;
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.credentials-box h3 {
+    font-family: 'Josefin Sans', sans-serif;
+    color: #2A2433;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+}
+
+.instruction {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+.cred-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+.cred-row .label {
+    font-weight: bold;
+    color: #555;
+    font-size: 0.9rem;
+}
+
+.cred-row .value {
+    font-family: monospace;
+    font-size: 1.1rem;
+    color: #F44E63;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.alert-mail {
+    margin-top: 15px;
+    font-size: 0.85rem;
+    color: #666;
+    text-align: center;
+}
+
+/* --- CAJA DE RAZONES (ERROR) --- */
+.reasons-box {
+    background-color: #fff5f5; /* Rojo muy clarito */
+    border: 1px solid #ffcccc;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+.reasons-box h3 {
+    font-size: 1rem;
+    color: #c0392b;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.reasons-box ul {
+    margin: 0;
+    padding-left: 20px;
+    color: #555;
+    font-size: 0.9rem;
+}
+
+.reasons-box li {
+    margin-bottom: 5px;
+}
+
+/* --- GANCHO COMERCIAL (ERROR) --- */
+.commercial-hook {
+    margin-bottom: 25px;
+    font-size: 0.95rem;
+    color: #333;
+    line-height: 1.5;
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #eee;
+}
+
+/* --- TEXTO LEGAL --- */
+.legal-disclaimer {
+    font-size: 0.75rem;
+    color: #999;
+    margin-bottom: 25px;
+    font-style: italic;
+    line-height: 1.4;
+}
+
+.legal-disclaimer a {
+    color: #999;
+    text-decoration: underline;
+}
+
+/* --- BOTONES --- */
+.actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.btn-start {
+    background-color: #F44E63;
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 50px; /* Redondeado moderno */
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 5px 15px rgba(244, 78, 99, 0.3);
+}
+
+.btn-start:hover {
+    background-color: #d63a4e;
+    transform: translateY(-2px);
+}
+
+/* Botón especial para reintentar (Negro/Gris Oscuro) */
+.btn-retry {
+    background-color: #333;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.btn-retry:hover {
+    background-color: #000;
+}
+
+.btn-home {
+    background: none;
+    border: none;
+    color: #888;
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: 0.9rem;
+    padding: 10px;
+}
+
+.btn-home:hover {
+    color: #333;
+}
+
+.link-help {
+    text-align: center;
+    color: #F44E63;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin-top: 5px;
+    display: block;
+}
+
+.link-help:hover {
+    text-decoration: underline;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 500px) {
+    .success-card {
+        padding: 30px 20px;
+    }
+    .cred-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+    .success-page {
+        padding-top: 120px; /* Ajuste móvil */
+    }
+}

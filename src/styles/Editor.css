@@ -1,0 +1,3185 @@
+/* src/styles/Editor.css */
+
+/* --- GENERALES --- */
+.editor-page {
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+
+
+/* --- DECORACIÓN FONDO --- */
+.bg-decoration { position: absolute; inset: 0; pointer-events: none; opacity: 0.4; z-index: 0; }
+.deco-icon { position: absolute; font-size: 4rem; opacity: 0.1; }
+
+.editor-title-block { text-align: center; margin-bottom: 30px; z-index: 10; position: relative; }
+.editor-title { font-size: 3rem; font-weight: 900; color: #2A2433; margin: 0; }
+.editor-title span { color: #F44E63; }
+.editor-subtitle { color: #666; margin-top: 5px; }
+
+/* --- BOTÓN PREVISUALIZAR --- */
+.btn-preview {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    padding: 15px 30px; background-color: #F44E63; color: white; border: none;
+    border-radius: 50px; font-size: 1.1rem; font-weight: bold; cursor: pointer;
+    transition: all 0.3s; margin-top: 20px; box-shadow: 0 10px 20px rgba(244, 78, 99, 0.3);
+}
+.btn-preview:hover { background-color: #d63a4e; transform: translateY(-3px); }
+
+/* --- ADMIN PANEL (FORMULARIO SCROLLABLE) --- */
+.admin-panel {
+    background: white; width: 100%; max-width: 600px; border-radius: 24px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.05); overflow: hidden; border: 1px solid #eee; z-index: 10;
+    
+    /* Altura máxima para permitir scroll interno si la pantalla es chica */
+    display: flex;
+    flex-direction: column;
+    max-height: 80vh; 
+}
+
+.panel-header { 
+    background-color: #2A2433; 
+    padding: 20px 30px; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    color: white; 
+    flex-shrink: 0; /* Para que el header no se achique */
+}
+
+.panel-body { 
+    padding: 30px; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 25px; 
+    overflow-y: auto; /* SCROLL AQUÍ */
+    flex-grow: 1;
+}
+
+/* Scrollbar personalizada para el form */
+.panel-body::-webkit-scrollbar { width: 8px; }
+.panel-body::-webkit-scrollbar-track { background: #f1f1f1; }
+.panel-body::-webkit-scrollbar-thumb { background: #ddd; border-radius: 4px; }
+.panel-body::-webkit-scrollbar-thumb:hover { background: #ccc; }
+
+.form-section-title { 
+    font-size: 1.2rem; 
+    font-weight: 800; 
+    color: #F44E63; 
+    border-bottom: 2px solid #eee; 
+    padding-bottom: 10px; 
+    margin-top: 30px; 
+    margin-bottom: 15px; 
+}
+/* El primer titulo no lleva margen arriba */
+.form-section-title:first-of-type { margin-top: 0; }
+
+.form-group label { display: block; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; color: #999; margin-bottom: 8px; }
+.form-input, .form-textarea, .form-select {
+    width: 100%; padding: 12px 15px; background-color: #f9fafb; border: 1px solid #e5e7eb;
+    border-radius: 12px; font-size: 1rem; color: #333; outline: none; transition: all 0.3s;
+    font-family: 'Josefin Sans', sans-serif; box-sizing: border-box;
+}
+.form-input:focus, .form-textarea:focus { background-color: white; border-color: #F44E63; }
+.form-textarea { height: 100px; resize: vertical; }
+.btn-small-action { background: #eee; border: none; padding: 8px 15px; border-radius: 8px; font-size: 0.8rem; cursor: pointer; margin-top: 5px; font-weight: bold;}
+
+/* =========================================
+   PLAYER (CORREGIDO CENTRADO)
+   ========================================= */
+
+.player-overlay { 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    background: rgba(0,0,0,0.95); /* Fondo oscuro casi negro */
+    z-index: 9999; 
+    
+    /* CENTRADO FLEXBOX ESTÁNDAR */
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+}
+
+.mobile-container { 
+    width: 100%; 
+    height: 100%; 
+    background: #2A2433; 
+    position: relative; 
+    overflow: hidden; 
+    box-shadow: 0 0 50px rgba(0,0,0,0.5); 
+}
+
+@media (min-width: 768px) { 
+    .mobile-container { 
+        width: 400px; /* Ancho fijo de celular */
+        height: 850px; /* Alto fijo de celular */
+        max-height: 95vh; /* Que no se salga de la pantalla */
+        border-radius: 40px; 
+        border: 8px solid #111; /* Borde tipo teléfono */
+    } 
+}
+
+/* Resto de estilos del Player (igual que antes) */
+.progress-bar-container { position: absolute; top: 15px; left: 0; right: 0; z-index: 50; display: flex; gap: 3px; padding: 0 10px; }
+.progress-segment { height: 3px; border-radius: 2px; background: rgba(255,255,255,0.3); flex: 1; transition: background 0.3s; }
+.progress-segment.active { background: white; box-shadow: 0 0 5px rgba(255,255,255,0.8); }
+.btn-close-player { position: absolute; top: 25px; right: 20px; z-index: 60; background: rgba(0,0,0,0.3); border: none; color: white; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; display: flex; alignItems: center; justifyContent: center; }
+
+/* SLIDES */
+.slide { 
+    position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 25px; text-align: center; 
+    box-shadow: 0 -10px 40px rgba(0,0,0,0.2); overflow: hidden;
+}
+.slide-content { width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; z-index: 10; }
+
+/* TEMAS Y ANIMACIONES (Se mantienen los lindos de antes) */
+.theme-intro { background: linear-gradient(-45deg, #fdfbfb, #ffe4e6, #fdf2f3); background-size: 400% 400%; animation: gradientBG 15s ease infinite; color: #2A2433;}
+.theme-salmon { background: linear-gradient(135deg, #F44E63, #ff9a9e); color: white; }
+.theme-dark { background: linear-gradient(to bottom, #2A2433, #1a1621); color: #F44E63; }
+.theme-white { background: #ffffff; color: #2A2433; }
+.theme-photo { background: #111; color: white; }
+.theme-party { background: linear-gradient(45deg, #8e2de2, #4a00e0); color: white; }
+.theme-zen { background: linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%); color: white; }
+
+@keyframes float { 0% { transform: translateY(0) rotate(0deg); opacity: 0; } 50% { opacity: 0.5; } 100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; } }
+.floating-particle { position: absolute; animation: float linear infinite; pointer-events: none; }
+
+/* Componentes Internos */
+.intro-logo-container { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; }
+.intro-logo-img { max-width: 250px; opacity: 0; animation: logoEntrance 1.5s ease forwards 0.3s; }
+.intro-tagline { margin-top: 20px; opacity: 0; animation: fadeUp 1s ease forwards 1s; color: #2A2433; font-weight: bold;}
+.swipe-hint { position: absolute; bottom: 40px; color: #F44E63; opacity: 0; animation: fadeUp 1s ease forwards 2s, pulse 2s infinite; font-size: 0.9rem; }
+
+/* --- SLIDE 3: DEDICATORIA (Polaroid vs Carta) --- */
+
+.dedication-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dedication-intro {
+    color: white;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+    opacity: 0.9;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.dedication-card {
+    background: white;
+    padding: 20px;
+    border-radius: 4px; /* Bordes menos redondeados para que parezca papel/foto */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    transform: rotate(-2deg); /* Rotación sutil */
+    transition: all 0.3s ease;
+    width: 100%;
+    max-width: 320px;
+}
+
+/* ESTILO A: CON FOTO (POLAROID) */
+.dedication-card.with-photo {
+    padding-bottom: 40px; /* Más espacio abajo para el texto */
+}
+
+.polaroid-img {
+    width: 100%;
+    aspect-ratio: 1/1; /* Cuadrada */
+    object-fit: cover;
+    border: 1px solid #eee;
+    margin-bottom: 20px;
+    background-color: #f0f0f0;
+}
+
+/* ESTILO B: SIN FOTO (CARTA) */
+.dedication-card.text-only {
+    min-height: 300px; /* Altura fija para que tenga presencia */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* Fondo rayado tipo cuaderno */
+    background-image: linear-gradient(#e5e7eb 1px, transparent 1px);
+    background-size: 100% 2rem; /* Distancia entre renglones */
+    padding-top: 2rem; /* Ajuste para calzar en renglones */
+    transform: rotate(1deg); /* Rotación opuesta para variar */
+}
+
+.quote-icon {
+    margin-bottom: 15px;
+    color: #F44E63;
+    opacity: 0.5;
+}
+
+/* Texto Manuscrito Común */
+.handwritten-text {
+    font-family: 'Courier New', monospace; /* O una fuente handwriting si importamos */
+    font-size: 1rem;
+    line-height: 2rem; /* Alinear con los renglones si es carta */
+    color: #333;
+    width: 100%;
+    word-break: break-word;
+}
+
+/* Firma */
+.card-signature {
+    text-align: right;
+    font-size: 0.85rem;
+    margin-top: 20px;
+    color: #666;
+    font-weight: bold;
+    width: 100%;
+    font-style: italic;
+}
+
+.yt-thumbnail-container { position: relative; width: 100%; aspect-ratio: 16/9; border-radius: 12px; overflow: hidden; margin-bottom: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.2); cursor: pointer; }
+.yt-thumbnail { width: 100%; height: 100%; object-fit: cover; }
+.play-btn-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; }
+
+.btn-viral { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.5); padding: 10px 20px; border-radius: 30px; color: white; font-weight: bold; font-size: 0.8rem; backdrop-filter: blur(5px); margin-top: 15px; cursor: pointer; display: flex; alignItems: center; gap: 8px; }
+
+.movies-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; width: 100%; max-height: 500px; overflow-y: auto; padding: 5px; }
+.movie-item { position: relative; border-radius: 10px; overflow: hidden; aspect-ratio: 2/3; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+.movie-item img { width: 100%; height: 100%; object-fit: cover; }
+.movie-platform { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.7); color: white; font-size: 0.6rem; padding: 4px; text-transform: uppercase; font-weight: bold; }
+
+.fortune-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; }
+.cookie-btn { background: #FFD700; border: none; font-size: 2rem; padding: 15px; border-radius: 50%; cursor: pointer; transition: transform 0.2s; box-shadow: 0 5px 0 #DAA520; }
+.cookie-btn:active { transform: translateY(4px); box-shadow: none; }
+.fortune-msg { background: white; padding: 20px; border-radius: 10px; color: #F44E63; font-weight: bold; margin-top: 20px; animation: popIn 0.5s ease; border: 2px dashed #F44E63; }
+
+.reasons-scroll { width: 100%; max-height: 400px; overflow-y: auto; text-align: left; padding: 10px; }
+.reason-item { background: rgba(255,255,255,0.9); padding: 12px; margin-bottom: 8px; border-radius: 8px; display: flex; gap: 10px; align-items: center; color: #2A2433; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+
+.playlist-card { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); padding: 15px; border-radius: 12px; margin-bottom: 10px; display: flex; align-items: center; gap: 15px; text-align: left; border: 1px solid rgba(255,255,255,0.2); transition: transform 0.2s; cursor: pointer; }
+
+@keyframes logoEntrance { to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+@keyframes popIn { from { transform: scale(0); } to { transform: scale(1); } }
+@keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+@keyframes breathe { 0%, 100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.5); opacity: 0.4; } }
+.breathing-circle { width: 100px; height: 100px; background: white; border-radius: 50%; animation: breathe 4s ease-in-out infinite; margin-bottom: 20px; }
+
+/* --- ESTILOS SLIDE 1 (DESTINATARIO) --- */
+/* --- SLIDE 1: NOMBRE DESTINATARIO --- */
+.recipient-name-big {
+    font-size: 4.5rem;
+    font-weight: 900;
+    color: #ffffff;
+    line-height: 1;
+    text-shadow: 4px 4px 0px rgba(0,0,0,0.1);
+    
+    /* ESTADO INICIAL: Oculto */
+    opacity: 0;
+    transform: scale(2) rotate(-15deg);
+}
+
+/* SOLO SE ANIMA SI EL PADRE TIENE .active-slide */
+.active-slide .recipient-name-big {
+    animation: stampIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.3s; /* Espera un poquito a que llegue el slide */
+}
+
+.sender-minimal {
+    position: absolute;
+    bottom: 50px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 600;
+    
+    /* ESTADO INICIAL */
+    opacity: 0;
+    transform: translateY(10px);
+}
+
+.active-slide .sender-minimal {
+    animation: fadeUp 1s ease forwards;
+    animation-delay: 1s;
+}
+
+@keyframes stampIn {
+    from { opacity: 0; transform: scale(2) rotate(-15deg); }
+    to { opacity: 1; transform: scale(1) rotate(-3deg); }
+}
+
+.gift-icon-anim {
+    animation: float 6s ease-in-out infinite;
+    filter: drop-shadow(0 10px 10px rgba(0,0,0,0.2));
+}
+/* --- NUEVOS ESTILOS SLIDE 1 --- */
+
+/* Formas flotantes de fondo (Círculos suaves) */
+.anim-shape {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.1); /* Blanco muy transparente */
+    border-radius: 50%;
+    filter: blur(40px); /* Difuminado para que sea suave */
+    z-index: 0; /* Detrás de todo */
+    animation: moveShape 15s infinite alternate ease-in-out;
+}
+
+.shape-1 {
+    width: 300px;
+    height: 300px;
+    top: -50px;
+    left: -100px;
+}
+
+.shape-2 {
+    width: 250px;
+    height: 250px;
+    bottom: 50px;
+    right: -80px;
+    animation-delay: -5s; /* Para que no se muevan igual */
+}
+
+@keyframes moveShape {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(30px, 50px) scale(1.1); }
+}
+
+/* Estilo minimalista para "De parte de..." */
+.sender-minimal {
+    position: absolute;
+    bottom: 50px; /* Pegado abajo */
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 600;
+    
+    /* Animación sutil de entrada */
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeUp 1s ease forwards;
+    animation-delay: 1s; /* Aparece al final */
+}
+/* =========================================
+   NUEVOS ESTILOS SLIDE 2 (HOLA DINÁMICO)
+   ========================================= */
+
+/* 1. Fondo Blanco Sutilmente Animado */
+.theme-subtle-white {
+    /* Un degradado muy suave entre blanco puro, blanco humo y un toque de gris cálido */
+    background: linear-gradient(120deg, #ffffff, #f8f9fa, #fafafa, #f5f5f5);
+    background-size: 400% 400%;
+    animation: gradientBG 20s ease infinite; /* Movimiento muy lento y fluido */
+    color: #2A2433;
+}
+
+/* 2. Contenedor del Título HOLA */
+.hola-title-container {
+    display: flex;
+    justify-content: center;
+    gap: 5px; /* Espacio entre letras */
+    margin-bottom: 30px;
+}
+
+/* 3. Animación de Letras Cayendo */
+.letter-fall {
+    font-size: 4rem;
+    font-weight: 900;
+    color: #F44E63;
+    display: inline-block;
+    
+    /* ESTADO INICIAL: Arriba y oculto */
+    opacity: 0;
+    transform: translateY(-100px);
+}
+
+/* DISPARADOR DE ANIMACIÓN */
+.active-slide .letter-fall {
+    animation: fallDownBounce 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Delays escalonados (se mantienen igual) */
+.active-slide .l-1 { animation-delay: 0.1s; }
+.active-slide .l-2 { animation-delay: 0.2s; }
+.active-slide .l-3 { animation-delay: 0.3s; }
+.active-slide .l-4 { animation-delay: 0.4s; }
+.active-slide .l-5 { animation-delay: 0.5s; }
+
+/* Textos del cuerpo */
+.dt-line-1, .dt-line-2 {
+    /* ESTADO INICIAL */
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.active-slide .dt-line-1 {
+    font-size: 1.3rem;
+    color: #555;
+    margin-bottom: 20px;
+    animation: fadeUp 0.8s ease forwards 0.8s;
+}
+
+.active-slide .dt-line-2 {
+    font-size: 1.5rem;
+    color: #2A2433;
+    animation: fadeUp 0.8s ease forwards 1.2s;
+}
+
+@keyframes fallDownBounce {
+    0% { opacity: 0; transform: translateY(-80px); }
+    60% { transform: translateY(10px); } /* Pequeño rebote hacia abajo */
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Delays para cada letra (para que caigan en cascada) */
+.l-1 { animation-delay: 0.1s; }
+.l-2 { animation-delay: 0.2s; }
+.l-3 { animation-delay: 0.3s; }
+.l-4 { animation-delay: 0.4s; }
+.l-5 { animation-delay: 0.5s; }
+
+/* 4. Textos del cuerpo dinámicos */
+.dynamic-text-block {
+    text-align: center;
+    max-width: 80%;
+    margin: 0 auto; /* <--- ESTA LÍNEA ES LA MAGIA: Centra el bloque horizontalmente */
+    
+    /* Opcional: Para asegurar que no se pegue a los bordes en pantallas muy chicas */
+    width: 100%; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dt-line-1 {
+    font-size: 1.3rem;
+    color: #555;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.8s; /* Aparece después del HOLA */
+}
+
+.dt-line-2 {
+    font-size: 1.5rem;
+    color: #2A2433;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 1.2s; /* Aparece último */
+}
+
+.boxie-pop {
+    color: #F44E63;
+    font-weight: 900;
+    font-size: 1.8rem;
+    display: inline-block;
+    animation: pulse 2s infinite; /* Un latido suave para llamar la atención */
+}
+
+/* --- NUEVOS ESTILOS SLIDE 3 (DEDICATORIA) --- */
+
+/* 1. Nuevo Fondo "Memories" (Cálido y Suave) */
+.theme-memories {
+    background: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    color: #2A2433;
+}
+
+/* 2. Tarjeta "Preview" (Lo que se ve primero) */
+.preview-card {
+    background: white;
+    padding: 15px 15px 40px 15px; /* Mucho padding abajo estilo Polaroid */
+    border-radius: 4px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    transform: rotate(-3deg);
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+    width: 260px;
+    text-align: center;
+    position: relative;
+}
+
+.preview-card:hover {
+    transform: rotate(0deg) scale(1.02);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+}
+
+.preview-img {
+    width: 100%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    background-color: #f0f0f0;
+    margin-bottom: 15px;
+    border: 1px solid #eee;
+}
+
+.preview-hint {
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0;
+    /* Puntos suspensivos si es muy largo */
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
+
+.click-hint {
+    position: absolute;
+    bottom: -40px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    color: white;
+    font-size: 0.8rem;
+    animation: pulse 2s infinite;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* 3. MODAL / POP-UP (Lectura Completa) */
+.modal-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(42, 36, 51, 0.9); /* Fondo oscuro semitransparente */
+    backdrop-filter: blur(5px);
+    z-index: 100; /* Por encima de todo */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    animation: fadeIn 0.3s ease forwards;
+}
+
+.modal-content {
+    background: #fff; /* Papel carta */
+    width: 100%;
+    max-height: 85%;
+    border-radius: 10px;
+    overflow-y: auto; /* SCROLL AQUÍ */
+    padding: 30px;
+    position: relative;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    text-align: left;
+    
+    /* Fondo rayado sutil */
+    background-image: linear-gradient(#f1f1f1 1px, transparent 1px);
+    background-size: 100% 2rem;
+    line-height: 2rem;
+}
+
+.modal-img {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.modal-text {
+    font-family: 'Courier New', monospace;
+    font-size: 1rem;
+    color: #333;
+    white-space: pre-wrap; /* Respeta los saltos de línea del usuario */
+}
+
+.btn-close-modal {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #eee;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+}
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* =========================================
+   ANIMACIÓN CONFETI / CELEBRACIÓN
+   ========================================= */
+
+/* =========================================
+   NUEVO CONFETI "EXPLOSIVO" 🎉
+   ========================================= */
+
+.confetti-container {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 5; /* Por encima del contenido */
+}
+
+.confetti-piece {
+    position: absolute;
+    bottom: -50px; /* Empiezan escondidos abajo */
+    opacity: 0;
+}
+
+/* Solo animamos si la slide está activa */
+.active-slide .confetti-piece {
+    animation: riseAndSpin linear forwards;
+}
+
+@keyframes riseAndSpin {
+    0% {
+        bottom: -10%;
+        opacity: 1;
+        transform: translateX(0) rotateX(0) rotateY(0);
+    }
+    100% {
+        bottom: 120%; /* Suben hasta salir de la pantalla */
+        opacity: 0.8;
+        /* Mucha rotación y movimiento lateral aleatorio (se define en el JS) */
+        transform: translateX(var(--drift)) rotateX(var(--rotX)) rotateY(var(--rotY));
+    }
+}
+/* =========================================
+   SLIDE 4: VIDEO FULL SCREEN + OVERLAY
+   ========================================= */
+
+/* Contenedor del video (Ocupa todo el fondo) */
+/* =========================================
+   SLIDE 4: VIDEO FULL SCREEN (CORREGIDO ZOOM)
+   ========================================= */
+
+.slide-video-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background: black;
+    overflow: hidden;
+    /* IMPORTANTE: Esto permite que puedas deslizar el dedo sobre el video */
+    pointer-events: none; 
+}
+
+.full-video-iframe {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+    /* TRUCO DE ZOOM: */
+    /* Hacemos el video mucho más ancho que la pantalla. 
+       Al mantener su proporción 16:9, YouTube agrandará la altura 
+       automáticamente para compensar, cubriendo todo el alto del celular. */
+    width: 400%; 
+    height: 100%;
+    
+    border: none;
+    filter: brightness(0.8); /* Un poco más oscuro para que se lea el texto */
+    pointer-events: none; /* Asegura que no robe los clics/swipes */
+}
+
+/* Tarjeta Blanca Inferior (Overlay) */
+.song-overlay-card {
+    position: absolute;
+    bottom: 40px; /* Separado del borde inferior */
+    left: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.95); /* Blanco casi sólido */
+    backdrop-filter: blur(10px); /* Efecto vidrio */
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+    z-index: 10; /* Por encima del video */
+    text-align: left;
+    
+    /* Animación de entrada */
+    opacity: 0;
+    transform: translateY(50px);
+}
+
+/* Solo aparece cuando la slide está activa */
+.active-slide .song-overlay-card {
+    animation: slideUpCard 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    animation-delay: 0.5s; /* Espera un poquito a que cargue el video */
+}
+
+@keyframes slideUpCard {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.song-overlay-title {
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: #2A2433;
+    margin: 0 0 8px 0;
+    line-height: 1.2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.song-overlay-text {
+    font-size: 0.9rem;
+    color: #555;
+    margin: 0;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+/* Animación de Ondas de Música (Equalizer) */
+.music-wave-mini {
+    display: flex;
+    gap: 3px;
+    align-items: flex-end;
+    height: 20px;
+}
+
+.bar-mini {
+    width: 4px;
+    background: #F44E63;
+    border-radius: 2px;
+    animation: waveMini 1s ease-in-out infinite;
+}
+.bar-mini:nth-child(1) { height: 40%; animation-delay: 0s; }
+.bar-mini:nth-child(2) { height: 80%; animation-delay: 0.2s; }
+.bar-mini:nth-child(3) { height: 50%; animation-delay: 0.4s; }
+
+@keyframes waveMini {
+    0%, 100% { height: 30%; }
+    50% { height: 100%; }
+}
+/* =========================================
+   SLIDE 5: PLAYLISTS (DISEÑO APP MÚSICA)
+   ========================================= */
+
+.playlist-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.playlist-card-pro {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 12px;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.playlist-card-pro:active {
+    transform: scale(0.98);
+}
+
+/* Efecto brillo al pasar */
+.playlist-card-pro::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.4), transparent);
+    transform: translateX(-100%);
+}
+
+.active-slide .playlist-card-pro::after {
+    animation: shine 2s infinite;
+}
+
+@keyframes shine {
+    100% { transform: translateX(100%); }
+}
+
+.album-cover {
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    margin-right: 15px;
+    background-size: cover;
+    background-position: center;
+    flex-shrink: 0;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    position: relative;
+}
+
+/* Icono pequeño de play sobre la portada */
+.album-play-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.3);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.playlist-info {
+    flex-grow: 1;
+    text-align: left;
+}
+
+.playlist-title {
+    font-weight: 800;
+    font-size: 1rem;
+    color: #2A2433;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.playlist-tags {
+    font-size: 0.75rem;
+    color: #666;
+    margin-top: 4px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.spotify-btn-icon {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: #1DB954; /* Verde Spotify */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    box-shadow: 0 4px 10px rgba(29, 185, 84, 0.3);
+}
+/* =========================================
+   SLIDE 5: ESTILO SPOTIFY (ADAPTADO A WEB)
+   ========================================= */
+
+.spotify-container {
+    width: 100%;
+    height: 100%;
+    background: #121212; /* Fondo oscuro estilo app de música */
+    color: white;
+    overflow-y: auto; /* Permite scrollear la lista */
+    position: relative;
+    text-align: left;
+}
+
+/* Ocultar barra de scroll para que se vea más como app */
+.spotify-container::-webkit-scrollbar { width: 0px; background: transparent; }
+
+/* La Imagen de Cabecera (Usa la de la dedicatoria) */
+.spotify-header {
+    height: 300px;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 20px;
+}
+
+/* Degradado negro hacia arriba para que se lea el texto */
+.spotify-gradient-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(18,18,18,0.5) 50%, #121212 100%);
+}
+
+.spotify-header-content {
+    position: relative;
+    z-index: 10;
+    margin-bottom: 10px;
+}
+
+.spotify-title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    margin: 0;
+    line-height: 1.1;
+    letter-spacing: -1px;
+}
+
+.spotify-subtitle {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.7);
+    margin-top: 5px;
+    font-weight: 500;
+}
+
+/* Botón Play "Sticky" */
+.spotify-play-btn {
+    background-color: #F44E63; /* ROSA BOXIE (En vez de verde) */
+    color: white;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 20px;
+    bottom: -27px; /* Mitad adentro, mitad afuera */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    border: none;
+    cursor: pointer;
+    z-index: 20;
+    transition: transform 0.2s;
+}
+
+.spotify-play-btn:active { transform: scale(0.95); }
+
+/* Lista de Canciones/Playlists */
+.spotify-list {
+    padding: 40px 20px 20px 20px; /* Padding top para dejar lugar al botón */
+    background: #121212;
+}
+
+.spotify-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    cursor: pointer;
+    transition: background 0.2s;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.spotify-row:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+.spotify-index {
+    color: #999;
+    font-size: 0.9rem;
+    width: 25px;
+    text-align: center;
+    margin-right: 10px;
+}
+
+.spotify-cover-mini {
+    width: 45px;
+    height: 45px;
+    background-size: cover;
+    margin-right: 15px;
+    border-radius: 4px;
+}
+
+.spotify-row-info h4 {
+    margin: 0;
+    font-size: 1rem;
+    color: white;
+    font-weight: 600;
+}
+
+.spotify-row-info p {
+    margin: 3px 0 0 0;
+    font-size: 0.75rem;
+    color: #b3b3b3;
+}
+
+.spotify-duration {
+    margin-left: auto;
+    font-size: 0.8rem;
+    color: #b3b3b3;
+}
+/* --- TEMA FULL SCREEN (Sin bordes para Spotify/Video) --- */
+.theme-full {
+    padding: 0 !important; /* Elimina el borde blanco */
+    background: #121212;   /* Fondo oscuro base */
+    width: 100%;
+    height: 100%;
+}
+/* =========================================
+   SLIDE 6: TRIVIA BOXIE (MEJORADA)
+   ========================================= */
+
+.trivia-container {
+    width: 100%;
+    height: 100%;
+    background: #f8f9fa; /* Fondo base claro */
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* --- FONDO MOSAICO (LOGO BOXIE) --- */
+/* --- FONDO MOSAICO (MEJORADO CON ESPACIO) --- */
+/* --- FONDO MOSAICO (AJUSTADO: MÁS JUNTO Y A COLOR) --- */
+.trivia-bg-pattern {
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top: -50%;
+    left: -50%;
+    
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    
+    /* ANTES: 80px -> AHORA: 40px (Más juntitos) */
+    gap: 40px; 
+    
+    z-index: 0;
+    pointer-events: none;
+    transform: rotate(-15deg);
+}
+
+.bg-pattern-icon {
+    width: 60px;
+    height: auto;
+    
+    /* Opacidad suave para que no moleste al texto */
+    opacity: 1.5; 
+    
+    /* BORRAMOS LA LÍNEA DEL FILTRO GRIS PARA QUE TENGA COLOR */
+    /* filter: grayscale(100%); */ 
+}
+
+/* El estilo de cada loguito individual */
+.bg-pattern-icon {
+    width: 60px; /* Tamaño del logo */
+    height: auto;
+    opacity: 0.20; /* Sutil */
+    filter: grayscale(100%); /* Opcional: Para que no compita el color */
+}
+
+/* --- PANTALLA DE INTRODUCCIÓN --- */
+.trivia-intro-screen {
+    position: absolute;
+    inset: 0;
+    background: white;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    text-align: center;
+    animation: fadeIn 0.5s ease;
+}
+
+.intro-title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: #F44E63;
+    margin-bottom: 20px;
+}
+
+.intro-text {
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 40px;
+    line-height: 1.6;
+}
+
+/* --- JUEGO PRINCIPAL --- */
+.trivia-game-content {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    
+    display: flex;
+    flex-direction: column;
+    
+    /* 1. Alineamos todo arriba al principio */
+    justify-content: flex-start; 
+    
+    /* 2. Le damos aire arriba para que la pregunta no se pegue al techo */
+    padding-top: 50px; 
+    
+    animation: slideUpCard 0.5s ease;
+}
+
+/* Indicador de Progreso (Pregunta 1/3) */
+.question-counter {
+    text-align: center;
+    font-size: 0.8rem;
+    font-weight: 900;
+    color: #ccc;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
+.trivia-question-card {
+    background: white;
+    padding: 30px 20px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+    border: 1px solid #eee;
+    position: relative;
+}
+
+.trivia-mascot {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 4px solid #f8f9fa;
+    font-size: 1.5rem;
+}
+
+.trivia-question-text {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #2A2433;
+    line-height: 1.4;
+    margin-top: 10px;
+}
+
+/* --- SISTEMA DE PISTAS --- */
+.hint-btn {
+    background: none;
+    border: none;
+    color: #F44E63;
+    font-weight: bold;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    margin-bottom: 20px;
+    align-self: center;
+}
+
+.hint-box {
+    background: #FFF3E0;
+    color: #E65100;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    text-align: center;
+    margin-bottom: 20px;
+    border: 1px dashed #FFB74D;
+    animation: popIn 0.3s ease;
+}
+
+/* --- BOTONES DE RESPUESTA --- */
+.trivia-options-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    
+    /* 3. LA MAGIA: Estos márgenes automáticos empujan las respuestas 
+       para que se centren solas en el espacio vacío que queda abajo */
+margin-top: 30px; 
+}
+
+.trivia-btn {
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-bottom: 5px solid #e0e0e0; /* Efecto 3D */
+    padding: 15px;
+    border-radius: 15px;
+    font-weight: 700;
+    color: #555;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.1s;
+    text-align: center;
+}
+
+.trivia-btn:active {
+    transform: translateY(4px);
+    border-bottom-width: 2px;
+}
+
+.trivia-btn.correct { background: #4CAF50; border-color: #388E3C; color: white; }
+.trivia-btn.wrong { background: #F44336; border-color: #D32F2F; color: white; animation: shake 0.4s; }
+
+/* POPUP DEL PREMIO */
+.prize-popup-overlay {
+    position: absolute; inset: 0; background: rgba(0,0,0,0.85);
+    display: flex; align-items: center; justify-content: center; z-index: 50; animation: fadeIn 0.3s;
+}
+.prize-card {
+    background: white; width: 85%; padding: 30px; border-radius: 25px; text-align: center;
+    animation: popIn 0.5s; position: relative;
+}
+.prize-code {
+    background: #f0f2f5; padding: 15px; border-radius: 10px; font-family: monospace;
+    font-size: 1.5rem; font-weight: bold; color: #2A2433; border: 2px dashed #2A2433; margin: 20px 0;
+}
+/* =========================================
+   SLIDE 7: ESTILO NETFLIX / STREAMING APP
+   ========================================= */
+
+.streaming-container {
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    position: relative;
+    overflow: hidden; /* Sin scroll, es pantalla fija */
+}
+
+/* Imagen de Fondo (La Película) */
+.streaming-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    transition: background-image 0.5s ease-in-out; /* Transición suave entre pelis */
+}
+
+/* Degradados para que se lea el texto (Arriba y Abajo) */
+.streaming-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, 
+        rgba(0,0,0,0.8) 0%, 
+        rgba(0,0,0,0) 20%, 
+        rgba(0,0,0,0) 60%, 
+        #000000 100%);
+    z-index: 1;
+}
+
+/* --- BARRA SUPERIOR (Plataformas) --- */
+/* --- BARRA SUPERIOR (CON LOGOS) --- */
+.streaming-navbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 10px; /* Un poco menos de padding lateral */
+    z-index: 20;
+    display: flex;
+    justify-content: center;
+    gap: 30px; /* Más espacio entre logos */
+    align-items: center;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent); /* Sombra para que se vean */
+}
+
+.platform-logo-btn {
+    background: none;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0.4; /* Apagados por defecto */
+    filter: grayscale(100%); /* En blanco y negro si no están activos */
+    transform: scale(0.9);
+}
+
+.platform-logo-img {
+    height: 35px; /* Altura fija para que se vean parejos */
+    width: auto;
+    display: block;
+}
+
+/* Estado Activo */
+.platform-logo-btn.active {
+    opacity: 1; /* Full color */
+    filter: grayscale(0%);
+    transform: scale(1.1); /* Un poquito más grandes */
+    border-bottom: 2px solid #F44E63; /* Línea rosa abajo */
+}
+
+/* --- INFO DE LA PELÍCULA (ABAJO) --- */
+.movie-hero-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 30px 20px 50px 20px;
+    z-index: 10;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hero-logo-boxie {
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #F44E63;
+    font-weight: 900;
+    margin-bottom: 10px;
+}
+
+.hero-movie-title {
+    font-size: 3rem;
+    font-weight: 900;
+    line-height: 1;
+    color: white;
+    margin-bottom: 10px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    /* Efecto para títulos largos */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.hero-tags {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    color: #ddd;
+    font-size: 0.8rem;
+    margin-bottom: 25px;
+    font-weight: 500;
+}
+
+.tag-dot { color: #F44E63; }
+
+/* --- BOTONES DE ACCIÓN --- */
+.hero-actions {
+    display: flex;
+    gap: 15px;
+    width: 100%;
+}
+
+.btn-hero {
+    flex: 1;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.btn-hero:active { transform: scale(0.95); }
+
+/* Botón PLAY (Blanco o Rosa) */
+.btn-play-hero {
+    background: white;
+    color: #000;
+}
+
+/* Botón SIGUIENTE (Gris traslúcido) */
+.btn-info-hero {
+    background: rgba(255, 255, 255, 0.25);
+    color: white;
+    backdrop-filter: blur(5px);
+}
+/* =========================================
+   SLIDE 8: CUPONERA (5 CUPONES + POPUP)
+   ========================================= */
+
+.coupons-container {
+    width: 100%;
+    height: 100%;
+    background: #fdfbf7; /* Color base suave */
+    
+    /* --- BORRAMOS LOS PUNTITOS ANTERIORES --- */
+    /* background-image: radial-gradient(#ddd 1px, transparent 1px); */
+    /* background-size: 20px 20px; */
+    
+    /* --- AGREGAMOS ESTO PARA EL NUEVO FONDO --- */
+    position: relative; /* Necesario para que el fondo absoluto se quede dentro */
+    overflow: hidden;   /* Para que no se salga el mosaico rotado */
+    
+    padding: 20px 15px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.coupons-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.coupons-title {
+    font-size: 1.8rem;
+    color: #2A2433;
+    font-weight: 900;
+}
+
+/* --- TICKET CERRADO --- */
+.coupon-ticket {
+    display: flex;
+    background: white;
+    margin-bottom: 15px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    overflow: hidden;
+    transition: transform 0.2s;
+    min-height: 100px;
+    cursor: pointer;
+    border: 1px solid #eee;
+}
+
+.coupon-ticket:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+/* Lado Izquierdo (Icono) */
+.coupon-stub {
+    background: #2A2433; /* Oscuro elegante */
+    width: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    border-right: 2px dashed rgba(255,255,255,0.3);
+    color: white;
+}
+
+/* Lado Derecho (Título) */
+.coupon-info {
+    flex: 1;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start; /* Alinea los textos a la izquierda dentro de la info */
+}
+.coupon-name {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #333;
+    line-height: 1.2;
+    margin-bottom: 5px;
+}
+
+.coupon-cta {
+    font-size: 0.75rem;
+    color: #F44E63;
+    font-weight: 700;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Asegura que el texto y la flecha estén juntos */
+    gap: 5px;
+    margin-top: 4px;
+}
+
+/* Estado "Leído" (Abierto) */
+.coupon-ticket.is-read {
+    opacity: 0.6;
+    background: #f0f0f0;
+}
+.coupon-ticket.is-read .coupon-stub {
+    background: #999;
+}
+
+/* --- POP-UP (MODAL DE DETALLE) --- */
+.coupon-modal-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(3px);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    animation: fadeIn 0.3s;
+}
+
+.coupon-modal-card {
+    background: white;
+    width: 90%;
+    max-width: 320px;
+    border-radius: 20px;
+    padding: 30px 25px; /* Un buen padding parejo */
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+    position: relative;
+    
+    /* FLEX COLUMN ESTRICTO */
+    display: flex;
+    flex-direction: column !important; /* El !important asegura que sea vertical normal */
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+/* 1. EL ÍCONO (Siempre primero) */
+.modal-icon {
+    font-size: 3rem;
+    margin: 0;
+    order: 1; /* Posición 1 */
+    animation: bounce 1s infinite;
+}
+
+/* 2. EL TÍTULO (Siempre segundo) */
+.modal-title {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #2A2433;
+    margin: 0;
+    line-height: 1.2;
+    order: 2; /* Posición 2 */
+}
+
+/* 3. LA DESCRIPCIÓN (Siempre tercera) */
+.modal-desc {
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 1rem;
+    color: #555;
+    background: #fff8f9;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px dashed #F44E63;
+    line-height: 1.5;
+    margin: 10px 0;
+    order: 3; /* Posición 3 */
+}
+
+/* 4. EL BOTÓN (Siempre al final) */
+.btn-close-modal {
+    background: #F44E63;
+    color: white;
+    border: none;
+    
+    /* Dimensiones */
+    width: 100%;
+    box-sizing: border-box;
+    padding: 15px;
+    margin-top: 10px;
+    
+    /* Reset de posición por si acaso */
+    position: static !important; 
+    
+    /* Centrado del texto interno */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* Estilos */
+    border-radius: 12px;
+    font-weight: 800;
+    font-size: 1.1rem;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(244, 78, 99, 0.3);
+    
+    /* POSICIÓN FORZADA AL FINAL */
+    order: 4; 
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+/* =========================================
+   SLIDE 9: 10 RAZONES (STACK OF CARDS)
+   ========================================= */
+/* =========================================
+   SLIDE 9: RAZONES (GLASS + PARALLAX)
+   ========================================= */
+
+.reasons-video-container {
+    width: 100%;
+    height: 100%;
+    /* Fondo base suave */
+    background: linear-gradient(to bottom, #fdfbfb, #fcecee);
+    position: relative;
+    overflow: hidden; /* Para que las bolas no se salgan */
+    display: flex;
+    flex-direction: column;
+    padding: 60px 20px 20px 20px;
+    align-items: center;
+}
+
+/* --- ELEMENTOS PARALLAX DE FONDO --- */
+.parallax-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px); /* Difuminado fuerte para efecto nube */
+    opacity: 0.6;
+    z-index: 0; /* Al fondo */
+    animation: floatBlob 10s ease-in-out infinite alternate;
+}
+
+.blob-1 {
+    top: -10%;
+    left: -10%;
+    width: 300px;
+    height: 300px;
+    background: #ffdde1; /* Rosa suave */
+    animation-delay: 0s;
+}
+
+.blob-2 {
+    bottom: 10%;
+    right: -20%;
+    width: 250px;
+    height: 250px;
+    background: #ee9ca7; /* Salmón */
+    animation-delay: -5s;
+}
+
+.blob-3 {
+    top: 40%;
+    left: 40%;
+    width: 200px;
+    height: 200px;
+    background: #c3cfe2; /* Azul lavanda */
+    animation-duration: 15s; /* Más lento */
+}
+
+@keyframes floatBlob {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(30px, 50px) scale(1.1); }
+}
+
+/* --- FEED (Ahora con Z-Index para estar sobre las bolas) --- */
+.reasons-feed {
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 25px; /* Más aire */
+    height: 100%;
+    overflow-y: auto;
+    scrollbar-width: none;
+    z-index: 10; /* Importante: Sobre el fondo */
+    padding-bottom: 20px;
+}
+.reasons-feed::-webkit-scrollbar { display: none; }
+
+/* --- TARJETA CRISTAL (GLASSMORPHISM) --- */
+.reason-bubble {
+    /* El truco del vidrio: */
+    background: rgba(255, 255, 255, 0.65); /* Blanco transparente */
+    backdrop-filter: blur(12px); /* Difumina lo que pasa por atrás (las bolas) */
+    -webkit-backdrop-filter: blur(12px);
+    
+    padding: 25px;
+    border-radius: 20px;
+    /* Sombra suave y colorida */
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.8); /* Borde blanco sutil */
+    
+    width: 100%;
+    text-align: center;
+    position: relative;
+    
+    animation: dropIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* TEXTO ELEGANTE (NO NEGRO) */
+.reason-bubble-text {
+    font-size: 1.3rem; /* Un poco más grande */
+    color: #4a4063; /* Violeta grisáceo elegante */
+    font-family: sans-serif; /* O la fuente que uses */
+    font-weight: 600;
+    line-height: 1.5;
+    text-shadow: 0 1px 1px rgba(255,255,255,0.8); /* Brillo para legibilidad */
+}
+
+/* Cursor rosa */
+.cursor-blink {
+    display: inline-block;
+    width: 3px;
+    height: 1.2em;
+    background-color: #F44E63;
+    margin-left: 4px;
+    vertical-align: sub;
+    animation: blink 1s infinite;
+    border-radius: 2px;
+}
+
+/* Badge estilizado */
+.reason-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    
+    /* Gradiente Boxie */
+    background: linear-gradient(45deg, #F44E63, #ff9a9e);
+    color: white;
+    
+    font-size: 0.75rem;
+    font-weight: 800;
+    padding: 6px 14px;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(244, 78, 99, 0.3);
+    letter-spacing: 1px;
+}
+
+/* ESTADO VIEJO (Se vuelve más transparente para enfocar la nueva) */
+.reason-bubble.old {
+    opacity: 0.5;
+    transform: scale(0.95);
+    background: rgba(255, 255, 255, 0.4); /* Más transparente aún */
+    filter: none; /* Quitamos gris para que se vea el color del fondo */
+    transition: all 0.6s ease;
+}
+/* =========================================
+   SLIDE 9: SCROLL REVEAL (GSAP)
+   ========================================= */
+
+.reveal-container {
+    width: 100%;
+    height: 100%;
+    background: #000; /* Fondo negro elegante como React Bits */
+    color: white;
+    padding: 100px 20px; /* Mucho padding arriba/abajo para dar aire */
+    overflow-y: auto; /* Permite el scroll */
+    position: relative;
+    
+    /* Ocultar barra de scroll para que sea más limpio */
+    scrollbar-width: none; 
+    -ms-overflow-style: none;
+}
+.reveal-container::-webkit-scrollbar { display: none; }
+
+.reveal-content {
+    max-width: 600px;
+    margin: 0 auto;
+    padding-bottom: 200px; /* Espacio extra al final */
+}
+
+/* El Texto */
+.reveal-text {
+    font-size: 2rem; /* Texto grande y legible [cite: 92] */
+    font-weight: 700; /* [cite: 97] */
+    line-height: 1.6; /* [cite: 95] */
+    text-align: left;
+}
+
+/* Palabras individuales (para la animación) */
+.reveal-word {
+    display: inline-block; /* Necesario para animar transform/opacity [cite: 101] */
+    margin-right: 8px; /* Espacio entre palabras */
+    opacity: 0.2; /* Empiezan apagadas [cite: 35] */
+    filter: blur(8px); /* Empiezan borrosas [cite: 48] */
+    transform: translateY(10px); /* Un poquito bajadas */
+    transition: opacity 0.5s, filter 0.5s, transform 0.5s; /* Suavizado si falla GSAP */
+    will-change: opacity, filter, transform;
+}
+
+/* Título fijo arriba (opcional, para contexto) */
+.reveal-header-fixed {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    z-index: 10;
+    pointer-events: none;
+}
+.reveal-title-mini {
+    background: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.8);
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    backdrop-filter: blur(5px);
+    display: inline-block;
+}
+/* =========================================
+   SLIDE 10: GRATITUD (GAMIFIED)
+   ========================================= */
+
+.gratitude-container {
+    width: 100%;
+    height: 100%;
+    /* Degradado cálido estilo "Golden Hour" */
+    background: linear-gradient(135deg, #fff1eb 0%, #ace0f9 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Barra de Progreso Superior */
+.progress-track {
+    position: absolute;
+    top: 40px;
+    width: 80%;
+    height: 8px;
+    background: rgba(0,0,0,0.05);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: #F44E63;
+    transition: width 0.5s ease;
+    width: 0%; /* Empieza vacío */
+}
+
+/* Tarjeta de Pregunta */
+.gratitude-card {
+    background: white;
+    width: 100%;
+    max-width: 400px;
+    padding: 40px 30px;
+    border-radius: 25px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    text-align: center;
+    animation: slideUpCard 0.6s ease;
+    position: relative;
+    z-index: 10;
+}
+
+.gratitude-icon {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    animation: bounce 2s infinite;
+}
+
+.gratitude-question {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #2A2433;
+    margin-bottom: 25px;
+    line-height: 1.3;
+}
+
+.gratitude-input {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #eee;
+    border-radius: 12px;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    transition: border 0.3s;
+    outline: none;
+    font-family: inherit;
+    resize: none; /* Si es textarea */
+    min-height: 80px;
+}
+
+.gratitude-input:focus {
+    border-color: #F44E63;
+}
+
+/* Botón de Acción */
+.btn-gratitude {
+    background: #2A2433;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+    width: 100%;
+}
+
+.btn-gratitude:hover {
+    background: #F44E63;
+    transform: translateY(-2px);
+}
+.btn-gratitude:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* PANTALLA FINAL (Frase) */
+.quote-container {
+    text-align: center;
+    padding: 20px;
+    animation: fadeIn 1s ease;
+    max-width: 500px;
+}
+
+.quote-text {
+    font-size: 1.8rem;
+    font-weight: 300;
+    font-style: italic;
+    color: #2A2433;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.quote-author {
+    font-size: 1rem;
+    color: #F44E63;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Partículas animadas (decoración) */
+.particle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.6;
+    animation: floatUp 4s infinite;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(0); opacity: 0; }
+    50% { opacity: 0.6; }
+    100% { transform: translateY(-100px); opacity: 0; }
+}
+/* =========================================
+   SLIDE 11: JOURNALING (MODERN APP STYLE)
+   ========================================= */
+
+.journal-modern-container {
+    width: 100%;
+    height: 100%;
+    /* Fondo Degradado Animado (Mesh Gradient) */
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    position: relative;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* La Tarjeta Flotante */
+.journal-card {
+    background: rgba(255, 255, 255, 0.95); /* Casi blanco sólido */
+    width: 100%;
+    max-width: 380px;
+    border-radius: 24px;
+    padding: 35px 25px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease;
+    text-align: center;
+}
+
+.journal-header-modern {
+    margin-bottom: 25px;
+}
+
+.journal-date-modern {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #999;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.journal-title-modern {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #2A2433;
+    margin: 0;
+}
+
+/* Mood Selector Moderno */
+.mood-row {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.mood-item {
+    font-size: 1.8rem;
+    background: #f4f4f4;
+    border-radius: 16px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 2px solid transparent;
+}
+
+.mood-item:hover {
+    transform: translateY(-5px);
+    background: white;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.mood-item.active {
+    background: #fff0f3; /* Rosa muy suave */
+    border-color: #F44E63;
+    transform: scale(1.1);
+}
+
+/* Input Limpio */
+.journal-input-modern {
+    width: 100%;
+    background: #f8f9fa;
+    border: none;
+    border-radius: 16px;
+    padding: 20px;
+    font-size: 1rem;
+    color: #333;
+    font-family: sans-serif;
+    resize: none;
+    min-height: 120px;
+    outline: none;
+    transition: box-shadow 0.3s;
+    line-height: 1.5;
+}
+
+.journal-input-modern:focus {
+    box-shadow: inset 0 0 0 2px #F44E63;
+    background: white;
+}
+
+.btn-save-modern {
+    margin-top: 20px;
+    background: #2A2433;
+    color: white;
+    border: none;
+    padding: 16px;
+    border-radius: 16px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: opacity 0.3s;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-save-modern:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Estado Guardado */
+.saved-state {
+    padding: 40px 20px;
+    animation: fadeIn 0.5s;
+}
+.saved-icon {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+    display: inline-block;
+    animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+/* =========================================
+   SLIDE 12: FORTUNE COOKIE (ANIMATED)
+   ========================================= */
+
+.fortune-container {
+    width: 100%;
+    height: 100%;
+    /* Fondo Místico Violeta/Azul */
+    background: radial-gradient(circle at center, #4b134f 0%, #11061f 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    color: white;
+}
+
+/* Estrellitas de fondo */
+.star-bg {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.3;
+    animation: twinkle 3s infinite ease-in-out;
+}
+
+/* LA GALLETA GIGANTE */
+.cookie-wrapper {
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.2s;
+    z-index: 10;
+}
+
+.cookie-emoji {
+    font-size: 8rem;
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
+    transition: transform 0.3s;
+    user-select: none;
+}
+
+.cookie-wrapper:hover .cookie-emoji {
+    transform: rotate(10deg) scale(1.05);
+}
+
+/* Animación de Romper (Shake violento) */
+.shaking {
+    animation: shakeHard 0.5s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+/* EL PAPELITO DE LA FORTUNA */
+.fortune-paper {
+    background: #fffdf0; /* Color papel */
+    color: #d90429; /* Texto rojo clásico */
+    padding: 20px 40px;
+    width: 80%;
+    max-width: 350px;
+    min-height: 100px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    
+    font-family: "Courier New", monospace; /* Fuente tipo máquina de escribir */
+    font-weight: bold;
+    font-size: 1.1rem;
+    line-height: 1.4;
+    
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    border-left: 5px solid #d90429; /* Borde rojo al costado */
+    
+    /* Estado inicial (oculto) */
+    opacity: 0;
+    transform: scale(0.5) translateY(50px);
+}
+
+/* Animación cuando aparece el papel */
+.fortune-paper.revealed {
+    animation: paperPop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Botón para abrir otra */
+.btn-replay-cookie {
+    margin-top: 40px;
+    background: transparent;
+    border: 2px solid rgba(255,255,255,0.3);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+    opacity: 0;
+    animation: fadeIn 1s 1s forwards; /* Aparece 1 seg después del papel */
+}
+.btn-replay-cookie:hover {
+    background: white;
+    color: #4b134f;
+    border-color: white;
+}
+
+/* KEYFRAMES */
+@keyframes shakeHard {
+    10%, 90% { transform: translate3d(-2px, 0, 0) rotate(-5deg); }
+    20%, 80% { transform: translate3d(4px, 0, 0) rotate(5deg); }
+    30%, 50%, 70% { transform: translate3d(-6px, 0, 0) rotate(-5deg); }
+    40%, 60% { transform: translate3d(6px, 0, 0) rotate(5deg); }
+}
+
+@keyframes paperPop {
+    0% { opacity: 0; transform: scale(0) rotate(-10deg); }
+    100% { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.2; transform: scale(0.8); }
+    50% { opacity: 0.8; transform: scale(1.2); }
+}
+
+@keyframes vanish {
+    to { transform: scale(1.5); opacity: 0; }
+}
+/* =========================================
+   SLIDE 13: ANÉCDOTA (MODERN BOXIE STYLE)
+   ========================================= */
+
+.anecdote-modern-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- CASO 1: CON FOTO (Estilo Insta Story) --- */
+.anecdote-photo-mode {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+/* La Imagen de Fondo (Full Screen o centrada) */
+.anecdote-bg-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Llena toda la pantalla */
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+/* Overlay Gradiente (Para que se lea el texto) */
+.anecdote-gradient-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60%; /* Ocupa el 60% inferior */
+    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.5) 60%, transparent 100%);
+    z-index: 2;
+}
+
+/* El Texto sobre la foto */
+.anecdote-content-wrapper {
+    position: absolute;
+    bottom: 40px;
+    left: 0;
+    width: 100%;
+    padding: 30px;
+    z-index: 10;
+    text-align: left;
+}
+
+.anecdote-tag {
+    background: #F44E63;
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 10px rgba(244, 78, 99, 0.4);
+}
+
+.anecdote-text-modern {
+    color: white;
+    font-size: 1.4rem;
+    font-weight: 700;
+    line-height: 1.4;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    font-family: sans-serif; /* Limpio */
+}
+
+/* --- CASO 2: SIN FOTO (Tipografía Boxie) --- */
+.anecdote-text-mode {
+    width: 100%;
+    height: 100%;
+    /* Degradado Boxie Animado */
+    background: linear-gradient(135deg, #2A2433 0%, #4a1e2c 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    text-align: center;
+    position: relative;
+}
+
+/* Círculo decorativo atrás */
+.anecdote-blob {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: linear-gradient(to right, #F44E63, #ff9a9e);
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.4;
+    animation: pulseBlob 5s infinite alternate;
+}
+
+.anecdote-big-quote {
+    font-size: 4rem;
+    color: #F44E63;
+    opacity: 0.5;
+    margin-bottom: -20px;
+    z-index: 2;
+}
+
+.anecdote-text-large {
+    font-size: 1.8rem;
+    color: white;
+    font-weight: 800;
+    line-height: 1.5;
+    z-index: 10;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+@keyframes pulseBlob {
+    from { transform: scale(1); opacity: 0.3; }
+    to { transform: scale(1.2); opacity: 0.5; }
+}
+/* =========================================
+   SLIDE 14: LA CARTA (MAGICAL GLASS)
+   ========================================= */
+
+.letter-magical-container {
+    width: 100%;
+    height: 100%;
+    /* Fondo base oscuro */
+    background: #1a1a2e;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* --- FONDO ANIMADO (LAVA LAMP) --- */
+.magical-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px); /* Difuminado extremo */
+    opacity: 0.7;
+    animation: floatBlob 20s infinite alternate;
+}
+
+.blob-purple {
+    top: -10%;
+    left: -10%;
+    width: 500px;
+    height: 500px;
+    background: #7209b7;
+}
+
+.blob-pink {
+    bottom: -10%;
+    right: -10%;
+    width: 400px;
+    height: 400px;
+    background: #F44E63;
+    animation-delay: -5s;
+}
+
+.blob-blue {
+    top: 40%;
+    left: 40%;
+    width: 300px;
+    height: 300px;
+    background: #4361ee;
+    animation-duration: 25s;
+}
+
+/* --- TARJETA DE CRISTAL --- */
+.glass-letter-card {
+    width: 100%;
+    max-width: 600px;
+    height: 90%; /* Casi toda la altura */
+    
+    /* EFECTO VIDRIO */
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px); /* Esto hace la magia de borrosidad */
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+    
+    border-radius: 30px;
+    padding: 40px 30px;
+    position: relative;
+    z-index: 10;
+    
+    display: flex;
+    flex-direction: column;
+    
+    /* Animación de entrada de la carta */
+    animation: cardFloatUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    transform: translateY(50px);
+    opacity: 0;
+}
+
+/* Icono o Sello Arriba */
+.letter-seal {
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 20px;
+    filter: drop-shadow(0 0 10px rgba(255,255,255,0.5));
+    animation: pulseHeart 2s infinite ease-in-out;
+}
+
+/* Área de Texto con Scroll */
+.glass-scroll-area {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 10px;
+    /* Scrollbar estilizada */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.5) transparent;
+}
+
+/* Texto */
+.glass-text-p {
+    color: rgba(255,255,255,0.95);
+    font-size: 1.1rem;
+    line-height: 1.7;
+    margin-bottom: 25px;
+    font-family: sans-serif; /* Más moderno que serif */
+    font-weight: 300;
+    letter-spacing: 0.5px;
+    
+    /* Animación de entrada por párrafo */
+    opacity: 0;
+    transform: translateY(20px);
+    animation: textFadeIn 0.8s ease forwards;
+}
+
+/* Firma */
+.glass-signature {
+    text-align: right;
+    font-family: 'Brush Script MT', cursive;
+    font-size: 1.8rem;
+    color: #F44E63;
+    margin-top: 30px;
+    opacity: 0;
+    animation: textFadeIn 1s ease forwards 1.5s; /* Tarda en aparecer */
+}
+
+/* --- ANIMACIONES --- */
+@keyframes floatBlob {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(50px, -50px) scale(1.1); }
+}
+
+@keyframes cardFloatUp {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulseHeart {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+}
+
+@keyframes textFadeIn {
+    to { opacity: 1; transform: translateY(0); }
+}
+/* src/styles/Editor.css */
+
+/* 1. CONTENEDOR PRINCIPAL (Fondo claro y centrado) */
+.editor-container {
+    width: 100%;
+    min-height: 100vh;
+    background: #fdfbfb; /* Fondo claro original */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 50px;
+    position: relative;
+}
+
+/* 2. EL FORMULARIO (Tarjeta blanca central) */
+.form-panel-unified {
+    background: white;
+    width: 90%;
+    max-width: 700px;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    margin-top: 20px;
+    z-index: 10;
+}
+
+/* 3. INPUTS Y LABELS */
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-label {
+    display: block;
+    font-weight: 700;
+    color: #2A2433;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+}
+
+.boxie-input {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #eee;
+    border-radius: 12px;
+    font-size: 1rem;
+    transition: border 0.3s;
+    outline: none;
+    font-family: inherit;
+    background: #f9f9f9;
+}
+
+.boxie-input:focus {
+    border-color: #F44E63;
+    background: white;
+}
+
+.section-divider {
+    margin: 40px 0 20px 0;
+    border-top: 1px dashed #ddd;
+    padding-top: 20px;
+    color: #F44E63;
+    font-size: 1.2rem;
+    font-weight: 800;
+}
+/* =========================================
+   SLIDE 14: FINAL (GRACIAS)
+   ========================================= */
+
+.thankyou-container {
+    width: 100%;
+    height: 100%;
+    /* Fondo oscuro elegante con degradado central */
+    background: radial-gradient(circle at center, #3a1c71 0%, #000000 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Luz ambiental de fondo */
+.ty-glow {
+    position: absolute;
+    width: 350px;
+    height: 350px;
+    background: #ff4b69;
+    border-radius: 50%;
+    filter: blur(140px);
+    opacity: 0.25;
+    animation: pulseGlow 5s infinite alternate;
+}
+
+/* Corazón Latiendo */
+.ty-icon-heart {
+    font-size: 6rem;
+    margin-bottom: 20px;
+    animation: heartbeat 1.5s infinite ease-in-out;
+    filter: drop-shadow(0 0 30px rgba(255, 75, 105, 0.6));
+}
+
+/* Título Gigante */
+.ty-title {
+    font-size: 4rem;
+    font-weight: 900;
+    margin: 0;
+    letter-spacing: 4px;
+    background: linear-gradient(to bottom right, #fff, #ffc3c3);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: fadeInUp 1s ease forwards;
+}
+
+/* Subtítulo */
+.ty-subtitle {
+    font-size: 1.2rem;
+    color: rgba(255,255,255,0.7);
+    margin-top: 15px;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    animation: fadeInUp 1s ease forwards 0.5s; /* Retraso */
+    opacity: 0;
+}
+
+/* Footer chiquito */
+.ty-footer {
+    position: absolute;
+    bottom: 40px;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 1px;
+}
+
+/* Animaciones */
+@keyframes heartbeat {
+    0% { transform: scale(1); }
+    15% { transform: scale(1.15); }
+    30% { transform: scale(1); }
+    45% { transform: scale(1.15); }
+    60% { transform: scale(1); }
+}
+
+@keyframes pulseGlow {
+    from { opacity: 0.2; transform: scale(1); }
+    to { opacity: 0.5; transform: scale(1.2); }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+/* =========================================
+   SLIDE 5.5: CHALLENGE CONNECTOR (FIXED)
+   ========================================= */
+
+/* =========================================
+   SLIDE 6.5: GAMER BOXIE STYLE (Cyber-Chic)
+   ========================================= */
+
+.gamer-boxie-container {
+    width: 100%;
+    height: 100%;
+    /* Fondo Boxie Premium: Violeta muy oscuro a casi negro */
+    background: radial-gradient(circle at center, #2e1d3a 0%, #0d0412 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    font-family: 'Montserrat', sans-serif; /* Fuente moderna, no pixelada */
+}
+
+/* Formas flotantes de fondo (Estilo consola) */
+.gamer-shape {
+    position: absolute;
+    color: rgba(255, 255, 255, 0.05);
+    font-size: 2rem;
+    font-weight: bold;
+    animation: floatShapeBoxie 10s infinite linear;
+}
+
+/* El Botón de Power (Estado Inicial) */
+.boxie-power-btn {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    border: 2px solid rgba(255,255,255,0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+    color: white;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 20;
+    box-shadow: 0 0 20px rgba(244, 78, 99, 0); /* Sin brillo aun */
+}
+
+/* El Joystick (Oculto al inicio) */
+.boxie-controller {
+    font-size: 8rem;
+    opacity: 0;
+    transform: scale(0.5) translateY(50px);
+    filter: drop-shadow(0 0 0 transparent);
+    transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 10;
+}
+
+/* Título */
+.boxie-gamer-title {
+    font-size: 3rem;
+    font-weight: 900;
+    color: white;
+    text-transform: uppercase;
+    margin-top: 20px;
+    opacity: 0;
+    letter-spacing: 2px;
+    text-align: center;
+    transform: translateY(20px);
+    transition: all 0.6s ease 0.2s;
+}
+
+.boxie-highlight {
+    color: #F44E63; /* EL ROSA BOXIE */
+    display: block;
+    font-size: 4rem;
+    text-shadow: 0 0 30px rgba(244, 78, 99, 0.4);
+}
+
+/* --- ESTADO ENCENDIDO (ACTIVADO) --- */
+
+/* 1. El botón se presiona y explota */
+.gamer-boxie-container.is-active .boxie-power-btn {
+    transform: scale(0.8);
+    background: #F44E63;
+    color: transparent; /* Se borra el icono */
+    box-shadow: 0 0 100px 50px rgba(244, 78, 99, 0.8); /* EXPLOSIÓN DE LUZ */
+    opacity: 0; /* Desaparece */
+}
+
+/* 2. Aparece el Joystick flotando */
+.gamer-boxie-container.is-active .boxie-controller {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    /* Brillo Neon Rosa/Violeta */
+    filter: drop-shadow(0 0 20px #F44E63) drop-shadow(0 0 60px #8E2DE2);
+    animation: floatLevitate 3s ease-in-out infinite;
+}
+
+/* 3. Aparece el texto */
+.gamer-boxie-container.is-active .boxie-gamer-title {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Animaciones */
+@keyframes floatShapeBoxie {
+    0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+    20% { opacity: 0.1; }
+    80% { opacity: 0.1; }
+    100% { transform: translateY(-20vh) rotate(360deg); opacity: 0; }
+}
+
+@keyframes floatLevitate {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+/* =========================================
+   SLIDE 6.5: CINEMA CURTAINS OPENING
+   ========================================= */
+
+.cinema-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    /* Fondo del escenario (detrás de las cortinas) */
+    background: radial-gradient(circle at center, #2c1e1e 0%, #000000 80%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1000px;
+}
+
+/* --- EL TEXTO CENTRAL --- */
+.cinema-content {
+    text-align: center;
+    color: #f0e6d2; /* Color crema/dorado antiguo */
+    z-index: 1; /* Detrás de las cortinas al inicio */
+    opacity: 0;
+    transform: scale(0.9);
+    transition: all 1.5s ease-out 0.8s; /* Aparece lento después de que abren */
+}
+
+/* Cuando se abre el telón, el texto aparece */
+.cinema-container.open-curtains .cinema-content {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.cinema-title {
+    font-family: 'Georgia', serif; /* Tipografía elegante tipo cine */
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    letter-spacing: 1px;
+}
+
+.cinema-subtitle {
+    font-family: sans-serif;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0.8;
+}
+
+/* --- LOS TELONES (CORTINAS) --- */
+.curtain-panel {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 52%; /* Un poco más del 50% para que se solapen al centro */
+    background: #8B0000; /* Rojo oscuro base */
+    /* Degradado lineal repetido para simular pliegues de tela */
+    background-image: repeating-linear-gradient(90deg, 
+        #6b0000 0%, 
+        #a00000 10%, 
+        #6b0000 20%
+    );
+    box-shadow: inset 0 0 30px rgba(0,0,0,0.6); /* Sombra interior para profundidad */
+    z-index: 10;
+    transition: transform 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Animación suave y lenta */
+}
+
+.curtain-left {
+    left: 0;
+    transform-origin: left center;
+}
+
+.curtain-right {
+    right: 0;
+    transform-origin: right center;
+}
+
+/* La cenefa (el telón cortito de arriba) */
+.curtain-valance {
+    position: absolute;
+    top: -20px;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background: #8B0000;
+    background-image: repeating-linear-gradient(90deg, #6b0000 0%, #a00000 5%, #6b0000 10%);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    z-index: 12;
+    border-bottom: 3px solid #4a0000;
+    border-radius: 0 0 50% 50% / 0 0 10px 10px; /* Bordes ondulados abajo */
+}
+
+/* --- ANIMACIÓN DE APERTURA --- */
+/* Al agregar esta clase, los telones se mueven hacia afuera */
+.cinema-container.open-curtains .curtain-left {
+    transform: translateX(-95%);
+}
+
+.cinema-container.open-curtains .curtain-right {
+    transform: translateX(95%);
+}
+/* =========================================
+   SLIDE 7.5: BOXIE SLOT MACHINE (VIBRANT FULLSCREEN)
+   ========================================= */
+
+.slot-machine-container {
+    width: 100%;
+    height: 100%;
+    /* FONDO VIBRANTE BOXIE A PANTALLA COMPLETA */
+    background: linear-gradient(135deg, #2a0845 0%, #6441A5 50%, #F44E63 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Luces de neón de fondo animadas */
+.neon-bg-lights {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: 
+        radial-gradient(circle at 20% 30%, rgba(244, 78, 99, 0.4) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(100, 65, 165, 0.4) 0%, transparent 50%);
+    animation: pulseLights 4s infinite alternate;
+    z-index: 1;
+}
+
+/* Título Principal */
+.slot-main-title {
+    font-family: 'Montserrat', sans-serif; /* Fuente moderna */
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: white;
+    text-transform: uppercase;
+    line-height: 1;
+    margin-bottom: 30px;
+    text-shadow: 0 0 20px rgba(244, 78, 99, 0.8), 0 0 40px rgba(244, 78, 99, 0.4);
+    z-index: 10;
+    text-align: center;
+}
+
+.slot-highlight { color: #F44E63; } /* Rosa Boxie */
+
+/* CONTENEDOR DE LOS RODILLOS (Más grande y brillante) */
+.reels-container-large {
+    display: flex;
+    gap: 15px;
+    /* Fondo estilo cristal/neón */
+    background: rgba(0,0,0,0.3);
+    backdrop-filter: blur(10px);
+    padding: 20px;
+    border-radius: 25px;
+    /* Borde Neón Rosa Intenso */
+    border: 4px solid #F44E63;
+    box-shadow: 0 0 50px rgba(244, 78, 99, 0.6), inset 0 0 20px rgba(244, 78, 99, 0.3);
+    margin-bottom: 40px;
+    overflow: hidden;
+    height: 180px; /* Más altos */
+    position: relative;
+    z-index: 10;
+    width: 90%;
+    max-width: 500px;
+}
+
+/* Línea de pago */
+.payline-glow {
+    position: absolute;
+    top: 50%;
+    left: -10%;
+    width: 120%;
+    height: 6px;
+    background: #F44E63;
+    z-index: 20;
+    transform: translateY(-50%);
+    box-shadow: 0 0 20px #F44E63, 0 0 10px white;
+    pointer-events: none;
+}
+
+/* RODILLOS CLAROS */
+.reel-light {
+    flex: 1;
+    background: linear-gradient(to bottom, #fff, #f0f0f0, #fff); /* Blancos y brillantes */
+    border-radius: 15px;
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+    border: 2px solid white;
+}
+
+.slot-icon {
+    font-size: 5rem; /* Emojis más grandes */
+    height: 180px; /* Mismo alto que el contenedor */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ESTILO PARA EL LOGO DE BOXIE (Imagen) */
+.slot-icon-img {
+    width: 85%;
+    height: 85%;
+    object-fit: contain;
+    /* Sombra rosa para que brille */
+    filter: drop-shadow(0 0 15px rgba(244, 78, 99, 0.8));
+}
+
+/* Animación de giro */
+.spinning .reel-strip {
+    animation: spinBlurHigh 0.2s linear infinite;
+}
+
+/* BOTÓN GIGANTE */
+.spin-btn-large {
+    background: linear-gradient(to right, #F44E63, #ff9a9e);
+    border: none;
+    border-radius: 60px;
+    padding: 20px 60px;
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(244, 78, 99, 0.5);
+    transition: all 0.2s;
+    text-transform: uppercase;
+    z-index: 10;
+}
+
+.spin-btn-large:active {
+    transform: scale(0.95);
+    box-shadow: 0 5px 15px rgba(244, 78, 99, 0.8);
+}
+
+.spin-btn-large:disabled {
+    opacity: 0.7;
+    cursor: wait;
+}
+
+/* OVERLAY GANADOR (Full Screen vibrante) */
+.winner-overlay-vibrant {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    /* Fondo semitransparente rosa/violeta */
+    background: rgba(42, 8, 69, 0.95);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.5s forwards;
+    text-align: center;
+    padding: 30px;
+}
+
+.win-title-boxie {
+    font-size: 4rem;
+    color: white;
+    font-weight: 900;
+    text-transform: uppercase;
+    /* Texto con gradiente */
+    background: linear-gradient(to right, #fff, #F44E63);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    margin-bottom: 10px;
+    filter: drop-shadow(0 0 20px rgba(244, 78, 99, 0.5));
+}
+
+.scroll-hint-boxie {
+    font-size: 1.3rem;
+    color: white;
+    margin-top: 30px;
+    font-weight: bold;
+    animation: bounce 2s infinite;
+    background: rgba(244, 78, 99, 0.2);
+    padding: 10px 30px;
+    border-radius: 30px;
+    border: 2px solid #F44E63;
+}
+
+/* KEYFRAMES */
+@keyframes spinBlurHigh {
+    0% { transform: translateY(0); filter: blur(4px); }
+    100% { transform: translateY(-100%); filter: blur(4px); }
+}
+
+@keyframes pulseLights {
+    0% { opacity: 0.5; transform: scale(1); }
+    100% { opacity: 0.8; transform: scale(1.1); }
+}
+
+@keyframes popIn {
+    0% { transform: scale(0); }
+    80% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-10px); }
+    60% { transform: translateY(-5px); }
+}
+/* =========================================
+   SLIDE 8.5: EDITORIAL CONNECTOR (MAGAZINE STYLE)
+   ========================================= */
+
+.editorial-container {
+    width: 100%;
+    height: 100%;
+    /* Fondo Papel Blanco/Crema para estilo revista */
+    background: #fdfbf7;
+    color: #1a1a1a;
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    overflow-y: auto; /* Permite scroll si el texto es largo */
+    position: relative;
+    font-family: 'Georgia', serif; /* Fuente clásica editorial */
+}
+
+/* Decoración de líneas finas */
+.editorial-border {
+    position: absolute;
+    top: 15px; left: 15px; right: 15px; bottom: 15px;
+    border: 1px solid #1a1a1a;
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* Título Gigante */
+.editorial-title {
+    font-size: 3.5rem;
+    line-height: 0.9;
+    font-weight: 900;
+    margin-bottom: 30px;
+    color: #1a1a1a;
+    letter-spacing: -1px;
+}
+
+.editorial-title span {
+    font-style: italic;
+    font-family: 'Times New Roman', serif;
+    font-weight: 400;
+}
+
+/* Layout de Contenido (Foto + Texto) */
+.editorial-content-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* La Foto Principal (Estilo Blanco y Negro o Normal) */
+.editorial-photo-frame {
+    width: 100%;
+    height: 250px;
+    background: #eee;
+    overflow: hidden;
+    position: relative;
+    border-bottom: 4px solid #F44E63; /* Toque Boxie */
+}
+
+.editorial-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Filtro de escala de grises suave para dar el toque "Revista" */
+    filter: grayscale(100%) contrast(1.1); 
+    transition: filter 0.5s;
+}
+
+/* Al pasar el mouse, cobra color */
+.editorial-photo-frame:hover .editorial-img {
+    filter: grayscale(0%) contrast(1);
+}
+
+/* Texto de Cuerpo */
+.editorial-body {
+    font-family: 'Helvetica', 'Arial', sans-serif; /* Sans serif para lectura */
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #333;
+    text-align: justify;
+}
+
+.editorial-highlight {
+    font-weight: bold;
+    background: linear-gradient(to top, rgba(244, 78, 99, 0.2) 40%, transparent 40%);
+}
+
+/* Footer / Call To Action */
+.editorial-footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 2px solid #1a1a1a;
+    text-align: right;
+}
+
+.editorial-cta {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #F44E63;
+    text-transform: uppercase;
+    font-family: sans-serif;
+    animation: pulseText 2s infinite;
+}
+
+.editorial-sub-cta {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 5px;
+    color: #666;
+}
+
+@keyframes pulseText {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}
+/* Agrega esto al final de Editor.css */
+.theme-white-boxie {
+    background-color: #fdfbfb;
+    color: #2A2433;
+}
+.theme-gold {
+    background: linear-gradient(135deg, #FFC371 0%, #FF5F6D 100%);
+}
+/* En Editor.css */
+.theme-bday-pastel {
+    /* Gradiente rosa/durazno suave y luminoso */
+    background: linear-gradient(135deg, #FFD1DC 0%, #FFDAB9 100%); 
+}

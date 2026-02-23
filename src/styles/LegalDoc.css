@@ -1,0 +1,72 @@
+/* src/styles/LegalDoc.css */
+.legal-page {
+    background-color: #fafafa;
+    min-height: 100vh;
+    padding: 40px 20px 80px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.legal-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 50px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.btn-back-legal {
+    background: none;
+    border: none;
+    color: #F44E63;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    padding: 0;
+}
+
+.btn-back-legal:hover {
+    text-decoration: underline;
+}
+
+.legal-content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.last-update {
+    color: #999;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+}
+
+.legal-text-body {
+    line-height: 1.8;
+    color: #444;
+}
+
+.legal-text-body h3 {
+    margin-top: 30px;
+    margin-bottom: 15px;
+    color: #000;
+    font-size: 1.3rem;
+}
+
+.legal-text-body p {
+    margin-bottom: 15px;
+}
+
+.legal-text-body ul {
+    margin-bottom: 15px;
+    padding-left: 20px;
+}
+
+.legal-text-body li {
+    margin-bottom: 10px;
+}
+
+@media (max-width: 600px) {
+    .legal-container { padding: 30px 20px; }
+    .legal-content h1 { font-size: 1.8rem; }
+}
